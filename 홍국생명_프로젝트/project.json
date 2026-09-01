@@ -1,0 +1,214 @@
+{
+  "name": "흥국생명",
+  "projectId": "baaca6a2-f462-4e0f-a175-be0a01f4a80d",
+  "description": "빈 프로세스",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.Excel.Activities": "[3.4.1]",
+    "UiPath.Mail.Activities": "[2.7.12]",
+    "UiPath.System.Activities": "[26.6.2]",
+    "UiPath.System.Activities.Runtime": "[26.6.2]",
+    "UiPath.Testing.Activities": "[25.10.1]",
+    "UiPath.UIAutomation.Activities.Runtime": "[25.10.33]",
+    "UiPath.WebAPI.Activities.Runtime": "[2.5.2]"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "25.10.14.0",
+  "projectVersion": "1.0.2",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
+    "workflowSerialization": "NewtonsoftJson",
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true,
+    "pipType": "ChildSession",
+    "robotVersion": "25.10.0"
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "saveToCloud": false
+  },
+  "arguments": {
+    "input": [
+      {
+        "name": "in_StartUrl",
+        "displayName": "in_StartUrl",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "https://www.heungkuklife.co.kr/front/public/saleProduct.do?searchFlgSale=Y"
+      },
+      {
+        "name": "in_ObjectiveText",
+        "displayName": "in_ObjectiveText",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "in_PromptRootFolder",
+        "displayName": "in_PromptRootFolder",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "C:\\Users\\FAS\\Desktop\\홍국생명보험\\홍국생명_프롬포트"
+      },
+      {
+        "name": "in_ControlCode",
+        "displayName": "in_ControlCode",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "MAIL01"
+      },
+      {
+        "name": "in_MaxSteps",
+        "displayName": "in_MaxSteps",
+        "type": "System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "20"
+      },
+      {
+        "name": "in_LlmApiKey",
+        "displayName": "in_LlmApiKey",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "in_LlmModel",
+        "displayName": "in_LlmModel",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "gemma-4-31B-it"
+      },
+      {
+        "name": "in_LlmApiBase",
+        "displayName": "in_LlmApiBase",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "https://gemma4-31b-mtp.proxy.ainexus.ktcloud.com/v1"
+      }
+    ],
+    "output": []
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "6c8eef7c-1c32-4a6d-9ac4-1d3b61430ce6",
+      "input": [
+        {
+          "name": "in_StartUrl",
+          "displayName": "in_StartUrl",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "https://www.heungkuklife.co.kr/front/public/saleProduct.do?searchFlgSale=Y"
+        },
+        {
+          "name": "in_ObjectiveText",
+          "displayName": "in_ObjectiveText",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": ""
+        },
+        {
+          "name": "in_PromptRootFolder",
+          "displayName": "in_PromptRootFolder",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "C:\\Users\\FAS\\Desktop\\홍국생명보험\\홍국생명_프롬포트"
+        },
+        {
+          "name": "in_ControlCode",
+          "displayName": "in_ControlCode",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "MAIL01"
+        },
+        {
+          "name": "in_MaxSteps",
+          "displayName": "in_MaxSteps",
+          "type": "System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "20"
+        },
+        {
+          "name": "in_LlmApiKey",
+          "displayName": "in_LlmApiKey",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": ""
+        },
+        {
+          "name": "in_LlmModel",
+          "displayName": "in_LlmModel",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "gemma-4-31B-it"
+        },
+        {
+          "name": "in_LlmApiBase",
+          "displayName": "in_LlmApiBase",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "https://gemma4-31b-mtp.proxy.ainexus.ktcloud.com/v1"
+        }
+      ],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Windows"
+}

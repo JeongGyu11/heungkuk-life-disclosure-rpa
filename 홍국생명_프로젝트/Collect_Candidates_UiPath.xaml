@@ -1,0 +1,363 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Collect_Candidates_UiPath" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing.Common" xmlns:sd1="clr-namespace:System.Drawing;assembly=System.Drawing.Primitives" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_CandidateTags" Type="InArgument(x:String)" />
+    <x:Property Name="out_CandidateUiElements" Type="OutArgument(scg:List(ui:UiElement))" />
+    <x:Property Name="out_CandidateJson" Type="OutArgument(x:String)" />
+    <x:Property Name="in_Operation" Type="InArgument(x:String)" />
+    <x:Property Name="in_Browser" Type="InArgument(ui:UiElement)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Collect_Candidates_UiPath_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.Platform.SyncObjects</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationNext.Models</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>System.Dynamic</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Collections.Specialized</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>GlobalVariablesT1PNoYwrqg</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>NPOI.Core</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Collections.Specialized</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Collect_Candidates_UiPath" sap:VirtualizedContainerService.HintSize="1859,3143" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence sap2010:Annotation.AnnotationText="UiPath Find Children으로 화면의 UI 후보 요소를 수집하고,&#xA;Qwen 전달용 후보 JSON과 element_id 순서에 맞는 UiElement 목록을 반환합니다." sap:VirtualizedContainerService.HintSize="588,3120" sap2010:WorkflowViewState.IdRef="Sequence_5">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="scg:List(ui:UiElement)" Name="candidateUiElements" />
+        <Variable x:TypeArguments="x:String" Name="candidateJson" />
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="liElements" />
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="spanElements" />
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="aElements" />
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="buttonElements" />
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="textareaElements" />
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="inputElements" />
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="selectElements" />
+        <Variable x:TypeArguments="x:String" Name="output" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Chrome NAVER" HealingAgentBehavior="Job" sap:VirtualizedContainerService.HintSize="554,721" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" ScopeGuid="09b36d97-03c8-4a3b-8065-da36394d4739" Version="V2">
+        <uix:NApplicationCard.Body>
+          <ActivityAction x:TypeArguments="x:Object">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="실행" sap:VirtualizedContainerService.HintSize="450,518" sap2010:WorkflowViewState.IdRef="Sequence_11">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InjectJsScript InputParameter="{x:Null}" DisplayName="Inject Js Script" sap:VirtualizedContainerService.HintSize="416,168" sap2010:WorkflowViewState.IdRef="InjectJsScript_1" ScriptCode="C:\Users\fasol\Desktop\js.txt">
+                <ui:InjectJsScript.ScriptOutput>
+                  <OutArgument x:TypeArguments="x:String">[output]</OutArgument>
+                </ui:InjectJsScript.ScriptOutput>
+                <ui:InjectJsScript.Target>
+                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="ff9d5e82-98e1-461d-8e67-0c44bb8c0d12">
+                    <ui:Target.TimeoutMS>
+                      <InArgument x:TypeArguments="x:Int32" />
+                    </ui:Target.TimeoutMS>
+                    <ui:Target.WaitForReady>
+                      <InArgument x:TypeArguments="ui:WaitForReady" />
+                    </ui:Target.WaitForReady>
+                  </ui:Target>
+                </ui:InjectJsScript.Target>
+              </ui:InjectJsScript>
+              <ui:WriteTextFile FileName="{x:Null}" Output="{x:Null}" DisplayName="Write Text File" File="[LocalResource.FromPath(&quot;C:\\Users\\fasol\\Desktop\\naver.txt&quot;)]" sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[Newtonsoft.Json.Linq.JObject.Parse(output).ToString(Newtonsoft.Json.Formatting.Indented)]" />
+              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="[Newtonsoft.Json.Linq.JObject.Parse(output).ToString(Newtonsoft.Json.Formatting.Indented)]" />
+            </Sequence>
+          </ActivityAction>
+        </uix:NApplicationCard.Body>
+        <uix:NApplicationCard.OCREngine>
+          <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
+            <ActivityFunc.Argument>
+              <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+            </ActivityFunc.Argument>
+          </ActivityFunc>
+        </uix:NApplicationCard.OCREngine>
+        <uix:NApplicationCard.TargetApp>
+          <uix:TargetApp Area="-8, -8, 1936, 1056" BrowserType="Chrome" ContentHash="_K_RJdBN0k6g4Wov4XcDDw" IconBase64="iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIfSURBVFhHxZZPT1NBFMVvcjbGhZv3KVz6aVSgtCoFNm5c+T1IdMnGL2AaIyFGhAoUaANiqUVflRhjQwzGhCY2RrzeqxM603c72znJLzmdN+d03r92CD8WagInokb4Ps8pIXwTkxDCaZVTQujPcUoIX+5xSgifxSSEcHKXU0L4eIej5CXO8mrAlbzM6FVGc3plznrzhXmaDboMCLmYGN1pHtfT8ybjeGY050PZHQml2aDLgPBeziRGZ8rVhbrfX5YvkDPUOcezbjSUZgt9YxC6YmK07QUM//ziG/lDxrvZf1jSrNnpQejI/Yzx9rarK6o7/MrXjuRStktuJJRmzU4PQlvOIMabW67O1vLZGuPQvkqaNTs9CIdiYuzHF6Ca+bTkXCjNmp0ehAN5kGK0brq6yTq/+OlcKM2anR6EfTEx9uwFDC6Gzk2WZs1OD0JLLkWMHfsWVHqPnJsszZqdHoSmmBgNewFZa46X+ivuky3Nmp0ehF15HWJs2a9h1lzgqztlPhicuJGiNGt2ehAaYmJsTljAnuzptkt8vfWAB7/t50GzZqcHYUt+kWLU7Xc8ayz+P/66xJXuYzcaSrOFvjEIm2JibEQWcDlnmp+c1t2RkTQbdBkQ6vJTGmNdXpdX8q8WIP+EG3IJL+dJmY6Nz9Os32VAWBeTEMKa7EwSQngpe7OEEF6ISQhhVfbnCSGsiEkI4bnsXhNCeFatCZyGau0vnrb5PVYj75UAAAAASUVORK5CYII=" InformativeScreenshot="7c396fe6e5e7a585502111e71e6dbd17.jpg" Reference="fwHfLqc290esJl_p5URJfQ/-4SQGJ_XhUywNiZdcJ-tyQ" Selector="&lt;html app='chrome.exe' title='NAVER' /&gt;" Url="https://www.naver.com/" Version="V3">
+            <uix:TargetApp.Arguments>
+              <InArgument x:TypeArguments="x:String" />
+            </uix:TargetApp.Arguments>
+            <uix:TargetApp.WorkingDirectory>
+              <InArgument x:TypeArguments="x:String" />
+            </uix:TargetApp.WorkingDirectory>
+          </uix:TargetApp>
+        </uix:NApplicationCard.TargetApp>
+      </uix:NApplicationCard>
+      <ui:BrowserScope BrowserType="{x:Null}" SearchScope="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" Browser="[in_Browser]" DisplayName="Attach Browser" sap:VirtualizedContainerService.HintSize="554,2271" sap2010:WorkflowViewState.IdRef="BrowserScope_2">
+        <ui:BrowserScope.Body>
+          <ActivityAction x:TypeArguments="x:Object">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="실행" sap:VirtualizedContainerService.HintSize="520,2139" sap2010:WorkflowViewState.IdRef="Sequence_6">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="486,123" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="[&quot;find Child Start: &quot; &amp; DateTime.Now.ToString(&quot;HH:mm:ss.fff&quot;)]" />
+              <Switch x:TypeArguments="x:String" DisplayName="Switch Operation" Expression="[in_Operation]" sap:VirtualizedContainerService.HintSize="486,1364" sap2010:WorkflowViewState.IdRef="Switch`1_2">
+                <Switch.Default>
+                  <Sequence DisplayName="Unsupported Operation" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw Exception="[New System.Exception(&quot;Unsupported operation: &quot; &amp; in_Operation)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                  </Sequence>
+                </Switch.Default>
+                <Sequence x:Key="TYPE_INTO" DisplayName="TYPE_INTO" sap:VirtualizedContainerService.HintSize="450,289" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:FindChildren Children="[inputElements]" DisplayName="Find Children input" Filter="&lt;webctrl tag='INPUT' /&gt;" sap:VirtualizedContainerService.HintSize="416,119" sap2010:WorkflowViewState.IdRef="FindChildren_8" Scope="FIND_DESCENDANTS">
+                    <ui:FindChildren.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="0acb7599-0196-4c4e-bee5-0a43523c9f2a">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:FindChildren.Target>
+                  </ui:FindChildren>
+                  <ui:FindChildren Children="[textareaElements]" DisplayName="Find Children btn TXTAREA" Filter="&lt;webctrl tag='TEXTAREA' /&gt;" sap:VirtualizedContainerService.HintSize="416,110" sap2010:WorkflowViewState.IdRef="FindChildren_9" Scope="FIND_DESCENDANTS">
+                    <ui:FindChildren.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="0acb7599-0196-4c4e-bee5-0a43523c9f2a">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:FindChildren.Target>
+                  </ui:FindChildren>
+                </Sequence>
+                <Sequence x:Key="CLICK" DisplayName="CLICK" sap:VirtualizedContainerService.HintSize="450,646" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:FindChildren Children="[inputElements]" DisplayName="Find Children input" Filter="&lt;webctrl tag='INPUT' /&gt;" sap:VirtualizedContainerService.HintSize="416,119" sap2010:WorkflowViewState.IdRef="FindChildren_10" Scope="FIND_DESCENDANTS">
+                    <ui:FindChildren.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="0acb7599-0196-4c4e-bee5-0a43523c9f2a">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:FindChildren.Target>
+                  </ui:FindChildren>
+                  <ui:FindChildren Children="[buttonElements]" DisplayName="Find Children btn" Filter="&lt;webctrl tag='BUTTON' /&gt;" sap:VirtualizedContainerService.HintSize="416,119" sap2010:WorkflowViewState.IdRef="FindChildren_11" Scope="FIND_DESCENDANTS">
+                    <ui:FindChildren.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="0acb7599-0196-4c4e-bee5-0a43523c9f2a">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:FindChildren.Target>
+                  </ui:FindChildren>
+                  <ui:FindChildren Children="[aElements]" DisplayName="Find Children btn a Link" Filter="&lt;webctrl tag='A' /&gt;" sap:VirtualizedContainerService.HintSize="416,119" sap2010:WorkflowViewState.IdRef="FindChildren_12" Scope="FIND_DESCENDANTS">
+                    <ui:FindChildren.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="0acb7599-0196-4c4e-bee5-0a43523c9f2a">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:FindChildren.Target>
+                  </ui:FindChildren>
+                  <ui:FindChildren Children="[spanElements]" DisplayName="Find Children - SPAN" Filter="&lt;webctrl tag='SPAN' /&gt;" sap:VirtualizedContainerService.HintSize="416,119" sap2010:WorkflowViewState.IdRef="FindChildren_13" Scope="FIND_DESCENDANTS">
+                    <ui:FindChildren.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="72b59648-d572-4893-b90f-a107951e2411">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:FindChildren.Target>
+                  </ui:FindChildren>
+                  <ui:FindChildren Children="[liElements]" DisplayName="Find Children - Li" Filter="&lt;webctrl tag='LI' /&gt;" sap:VirtualizedContainerService.HintSize="416,110" sap2010:WorkflowViewState.IdRef="FindChildren_14" Scope="FIND_DESCENDANTS">
+                    <ui:FindChildren.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="72b59648-d572-4893-b90f-a107951e2411">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:FindChildren.Target>
+                  </ui:FindChildren>
+                </Sequence>
+              </Switch>
+              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="486,123" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="[&quot;find Child END: &quot; &amp; DateTime.Now.ToString(&quot;HH:mm:ss.fff&quot;)]" />
+              <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="486,281" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                <ui:CommentOut.Body>
+                  <Sequence DisplayName="무시된 액티비티" sap:VirtualizedContainerService.HintSize="450,170" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:FindChildren Children="[selectElements]" DisplayName="Find Children btn SELECT" Filter="&lt;webctrl tag='SELECT' /&gt;" sap:VirtualizedContainerService.HintSize="416,110" sap2010:WorkflowViewState.IdRef="FindChildren_15" Scope="FIND_DESCENDANTS">
+                      <ui:FindChildren.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="0acb7599-0196-4c4e-bee5-0a43523c9f2a">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:FindChildren.Target>
+                    </ui:FindChildren>
+                  </Sequence>
+                </ui:CommentOut.Body>
+              </ui:CommentOut>
+              <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim allowedTags As New System.Collections.Generic.HashSet(Of String)(System.StringComparer.OrdinalIgnoreCase)&#xA;&#xA;' candidate_tags 파싱&#xA;' 처리 가능한 형식:&#xA;' [&quot;BUTTON&quot;,&quot;A&quot;,&quot;SPAN&quot;]&#xA;' BUTTON,A,SPAN&#xA;If Not String.IsNullOrWhiteSpace(in_candidateTags) Then&#xA;    Dim cleanedTags As String = in_candidateTags.Trim()&#xA;&#xA;    cleanedTags = cleanedTags.Replace(&quot;[&quot;, &quot;&quot;)&#xA;    cleanedTags = cleanedTags.Replace(&quot;]&quot;, &quot;&quot;)&#xA;    cleanedTags = cleanedTags.Replace(ChrW(34), &quot;&quot;)&#xA;&#xA;    For Each tagItem As String In cleanedTags.Split(&quot;,&quot;c)&#xA;        Dim normalizedTag As String = tagItem.Trim().ToUpperInvariant()&#xA;&#xA;        If Not String.IsNullOrWhiteSpace(normalizedTag) Then&#xA;            allowedTags.Add(normalizedTag)&#xA;        End If&#xA;    Next&#xA;End If&#xA;&#xA;' candidate_tags 누락 시 기존 검색 태그 전체 허용&#xA;If allowedTags.Count = 0 Then&#xA;    allowedTags.Add(&quot;INPUT&quot;)&#xA;    allowedTags.Add(&quot;BUTTON&quot;)&#xA;    allowedTags.Add(&quot;A&quot;)&#xA;    allowedTags.Add(&quot;SPAN&quot;)&#xA;    allowedTags.Add(&quot;SELECT&quot;)&#xA;    allowedTags.Add(&quot;TEXTAREA&quot;)&#xA;&#x9;allowedTags.Add(&quot;LI&quot;)&#xA;End If&#xA;&#xA;' 컬렉션 종류로 태그를 이미 알고 있으므로&#xA;' UiElement.Get(&quot;tag&quot;)를 호출하지 않고 태그와 요소를 함께 보관&#xA;Dim taggedElements As New System.Collections.Generic.List(&#xA;    Of System.Collections.Generic.KeyValuePair(&#xA;        Of String,&#xA;        UiPath.Core.UiElement&#xA;    )&#xA;)()&#xA;&#xA;If allowedTags.Contains(&quot;INPUT&quot;) AndAlso in_inputElements IsNot Nothing Then&#xA;    For Each el As UiPath.Core.UiElement In in_inputElements&#xA;        taggedElements.Add(&#xA;            New System.Collections.Generic.KeyValuePair(&#xA;                Of String,&#xA;                UiPath.Core.UiElement&#xA;            )(&quot;INPUT&quot;, el)&#xA;        )&#xA;    Next&#xA;End If&#xA;&#xA;If allowedTags.Contains(&quot;BUTTON&quot;) AndAlso in_buttonElements IsNot Nothing Then&#xA;    For Each el As UiPath.Core.UiElement In in_buttonElements&#xA;        taggedElements.Add(&#xA;            New System.Collections.Generic.KeyValuePair(&#xA;                Of String,&#xA;                UiPath.Core.UiElement&#xA;            )(&quot;BUTTON&quot;, el)&#xA;        )&#xA;    Next&#xA;End If&#xA;&#xA;If allowedTags.Contains(&quot;A&quot;) AndAlso in_aElements IsNot Nothing Then&#xA;    For Each el As UiPath.Core.UiElement In in_aElements&#xA;        taggedElements.Add(&#xA;            New System.Collections.Generic.KeyValuePair(&#xA;                Of String,&#xA;                UiPath.Core.UiElement&#xA;            )(&quot;A&quot;, el)&#xA;        )&#xA;    Next&#xA;End If&#xA;&#xA;If allowedTags.Contains(&quot;SPAN&quot;) AndAlso in_spanElements IsNot Nothing Then&#xA;    For Each el As UiPath.Core.UiElement In in_spanElements&#xA;        taggedElements.Add(&#xA;            New System.Collections.Generic.KeyValuePair(&#xA;                Of String,&#xA;                UiPath.Core.UiElement&#xA;            )(&quot;SPAN&quot;, el)&#xA;        )&#xA;    Next&#xA;End If&#xA;&#xA;If allowedTags.Contains(&quot;LI&quot;) AndAlso in_liElements IsNot Nothing Then&#xA;    For Each el As UiPath.Core.UiElement In in_liElements&#xA;        taggedElements.Add(&#xA;            New System.Collections.Generic.KeyValuePair(&#xA;                Of String,&#xA;                UiPath.Core.UiElement&#xA;            )(&quot;LI&quot;, el)&#xA;        )&#xA;    Next&#xA;End If&#xA;&#xA;If allowedTags.Contains(&quot;SELECT&quot;) AndAlso in_selectElements IsNot Nothing Then&#xA;    For Each el As UiPath.Core.UiElement In in_selectElements&#xA;        taggedElements.Add(&#xA;            New System.Collections.Generic.KeyValuePair(&#xA;                Of String,&#xA;                UiPath.Core.UiElement&#xA;            )(&quot;SELECT&quot;, el)&#xA;        )&#xA;    Next&#xA;End If&#xA;&#xA;If allowedTags.Contains(&quot;TEXTAREA&quot;) AndAlso in_textareaElements IsNot Nothing Then&#xA;    For Each el As UiPath.Core.UiElement In in_textareaElements&#xA;        taggedElements.Add(&#xA;            New System.Collections.Generic.KeyValuePair(&#xA;                Of String,&#xA;                UiPath.Core.UiElement&#xA;            )(&quot;TEXTAREA&quot;, el)&#xA;        )&#xA;    Next&#xA;End If&#xA;&#xA;Dim candidateArray As New Newtonsoft.Json.Linq.JArray()&#xA;Dim candidateElements As New System.Collections.Generic.List(Of UiPath.Core.UiElement)()&#xA;&#xA;Dim idx As Integer = 1&#xA;&#xA;For Each taggedElement As System.Collections.Generic.KeyValuePair(&#xA;    Of String,&#xA;    UiPath.Core.UiElement&#xA;) In taggedElements&#xA;&#xA;    Dim tagVal As String = taggedElement.Key&#xA;    Dim el As UiPath.Core.UiElement = taggedElement.Value&#xA;&#xA;    If el Is Nothing Then&#xA;        Continue For&#xA;    End If&#xA;&#xA;    Dim typeVal As String = &quot;&quot;&#xA;&#xA;    ' type은 INPUT에서만 조회&#xA;    If String.Equals(tagVal, &quot;INPUT&quot;, StringComparison.OrdinalIgnoreCase) Then&#xA;        Try&#xA;            typeVal = Convert.ToString(el.Get(&quot;type&quot;)).Trim()&#xA;        Catch&#xA;            typeVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        ' hidden INPUT 즉시 제외&#xA;        If String.Equals(typeVal, &quot;hidden&quot;, StringComparison.OrdinalIgnoreCase) Then&#xA;            Continue For&#xA;        End If&#xA;    End If&#xA;&#xA;    Dim idVal As String = &quot;&quot;&#xA;    Dim textVal As String = &quot;&quot;&#xA;    Dim nameVal As String = &quot;&quot;&#xA;    Dim placeholderVal As String = &quot;&quot;&#xA;    Dim ariaLabelVal As String = &quot;&quot;&#xA;    Dim aanameVal As String = &quot;&quot;&#xA;&#xA;    ' 모든 태그에서 id 조회&#xA;    Try&#xA;        idVal = Convert.ToString(el.Get(&quot;id&quot;)).Trim()&#xA;    Catch&#xA;        idVal = &quot;&quot;&#xA;    End Try&#xA;&#xA;    If tagVal = &quot;INPUT&quot; OrElse&#xA;       tagVal = &quot;TEXTAREA&quot; OrElse&#xA;       tagVal = &quot;SELECT&quot; Then&#xA;&#xA;        ' 입력 계열은 name, placeholder 위주로 조회&#xA;        Try&#xA;            nameVal = Convert.ToString(el.Get(&quot;name&quot;)).Trim()&#xA;        Catch&#xA;            nameVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        Try&#xA;            placeholderVal = Convert.ToString(el.Get(&quot;placeholder&quot;)).Trim()&#xA;        Catch&#xA;            placeholderVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        ' checkbox, radio, submit, button은 text 값이 식별에 도움이 될 수 있음&#xA;        If tagVal = &quot;INPUT&quot; AndAlso&#xA;           (String.Equals(typeVal, &quot;checkbox&quot;, StringComparison.OrdinalIgnoreCase) OrElse&#xA;            String.Equals(typeVal, &quot;radio&quot;, StringComparison.OrdinalIgnoreCase) OrElse&#xA;            String.Equals(typeVal, &quot;submit&quot;, StringComparison.OrdinalIgnoreCase) OrElse&#xA;            String.Equals(typeVal, &quot;button&quot;, StringComparison.OrdinalIgnoreCase)) Then&#xA;&#xA;            Try&#xA;                textVal = Convert.ToString(el.Get(&quot;text&quot;)).Trim()&#xA;            Catch&#xA;                textVal = &quot;&quot;&#xA;            End Try&#xA;        End If&#xA;&#xA;        ' 입력 계열은 기존과 동일하게 접근성 속성 조회&#xA;        Try&#xA;            ariaLabelVal = Convert.ToString(el.Get(&quot;aria-label&quot;)).Trim()&#xA;        Catch&#xA;            ariaLabelVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        Try&#xA;            aanameVal = Convert.ToString(el.Get(&quot;aaname&quot;)).Trim()&#xA;        Catch&#xA;            aanameVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;    ElseIf String.Equals(tagVal, &quot;SPAN&quot;, StringComparison.OrdinalIgnoreCase) Then&#xA;&#xA;        ' SPAN 1단계:&#xA;        ' innertext 우선 조회, 비어 있을 때만 text 조회&#xA;        Try&#xA;            textVal = Convert.ToString(el.Get(&quot;innertext&quot;)).Trim()&#xA;        Catch&#xA;            textVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        If String.IsNullOrWhiteSpace(textVal) Then&#xA;            Try&#xA;                textVal = Convert.ToString(el.Get(&quot;text&quot;)).Trim()&#xA;            Catch&#xA;                textVal = &quot;&quot;&#xA;            End Try&#xA;        End If&#xA;&#xA;        ' aria-label만 가진 아이콘형 SPAN을 보존하기 위해 1단계에서 조회&#xA;        Try&#xA;            ariaLabelVal = Convert.ToString(el.Get(&quot;aria-label&quot;)).Trim()&#xA;        Catch&#xA;            ariaLabelVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        ' id, text, aria-label이 모두 없으면 aaname 조회 없이 즉시 제외&#xA;        If String.IsNullOrWhiteSpace(idVal) AndAlso&#xA;           String.IsNullOrWhiteSpace(textVal) AndAlso&#xA;           String.IsNullOrWhiteSpace(ariaLabelVal) Then&#xA;&#xA;            Continue For&#xA;        End If&#xA;&#xA;        ' SPAN 2단계:&#xA;        ' 1단계를 통과한 요소에서만 aaname 조회&#xA;        Try&#xA;            aanameVal = Convert.ToString(el.Get(&quot;aaname&quot;)).Trim()&#xA;        Catch&#xA;            aanameVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;    Else&#xA;        ' BUTTON, A는 화면 텍스트 위주로 조회&#xA;        Try&#xA;            textVal = Convert.ToString(el.Get(&quot;innertext&quot;)).Trim()&#xA;        Catch&#xA;            textVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        If String.IsNullOrWhiteSpace(textVal) Then&#xA;            Try&#xA;                textVal = Convert.ToString(el.Get(&quot;text&quot;)).Trim()&#xA;            Catch&#xA;                textVal = &quot;&quot;&#xA;            End Try&#xA;        End If&#xA;&#xA;        Try&#xA;            ariaLabelVal = Convert.ToString(el.Get(&quot;aria-label&quot;)).Trim()&#xA;        Catch&#xA;            ariaLabelVal = &quot;&quot;&#xA;        End Try&#xA;&#xA;        Try&#xA;            aanameVal = Convert.ToString(el.Get(&quot;aaname&quot;)).Trim()&#xA;        Catch&#xA;            aanameVal = &quot;&quot;&#xA;        End Try&#xA;    End If&#xA;&#xA;    ' 줄바꿈, 탭, 다중 공백 정리&#xA;    textVal = System.Text.RegularExpressions.Regex.Replace(textVal, &quot;\s+&quot;, &quot; &quot;).Trim()&#xA;    nameVal = System.Text.RegularExpressions.Regex.Replace(nameVal, &quot;\s+&quot;, &quot; &quot;).Trim()&#xA;    placeholderVal = System.Text.RegularExpressions.Regex.Replace(placeholderVal, &quot;\s+&quot;, &quot; &quot;).Trim()&#xA;    ariaLabelVal = System.Text.RegularExpressions.Regex.Replace(ariaLabelVal, &quot;\s+&quot;, &quot; &quot;).Trim()&#xA;    aanameVal = System.Text.RegularExpressions.Regex.Replace(aanameVal, &quot;\s+&quot;, &quot; &quot;).Trim()&#xA;&#xA;    Dim elementId As String = &quot;E&quot; &amp; idx.ToString(&quot;000&quot;)&#xA;    Dim obj As New Newtonsoft.Json.Linq.JObject()&#xA;&#xA;    obj(&quot;element_id&quot;) = elementId&#xA;    obj(&quot;tag&quot;) = tagVal&#xA;&#xA;    ' 값이 있는 속성만 JSON에 포함&#xA;    If Not String.IsNullOrWhiteSpace(typeVal) Then&#xA;        obj(&quot;type&quot;) = typeVal&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(idVal) Then&#xA;        obj(&quot;id&quot;) = idVal&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(textVal) Then&#xA;        obj(&quot;text&quot;) = textVal&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(nameVal) Then&#xA;        obj(&quot;name&quot;) = nameVal&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(placeholderVal) Then&#xA;        obj(&quot;placeholder&quot;) = placeholderVal&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(ariaLabelVal) Then&#xA;        obj(&quot;aria_label&quot;) = ariaLabelVal&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(aanameVal) Then&#xA;        obj(&quot;aaname&quot;) = aanameVal&#xA;    End If&#xA;&#xA;    ' JSON 후보와 실제 UiElement를 같은 순서로 저장&#xA;    candidateArray.Add(obj)&#xA;    candidateElements.Add(el)&#xA;&#xA;    idx += 1&#xA;Next&#xA;&#xA;' selector, enabled는 이 단계에서 조회하지 않음&#xA;out_candidateJson = candidateArray.ToString(Newtonsoft.Json.Formatting.None)&#xA;out_candidateUiElements = candidateElements" DisplayName="Build Qwen Candidates" sap:VirtualizedContainerService.HintSize="486,188" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+                <ui:InvokeCode.Arguments>
+                  <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_inputElements">[inputElements]</InArgument>
+                  <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_buttonElements">[buttonElements]</InArgument>
+                  <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_aElements">[aElements]</InArgument>
+                  <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_spanElements">[spanElements]</InArgument>
+                  <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_selectElements">[selectElements]</InArgument>
+                  <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_textareaElements">[textareaElements]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_candidateTags">[in_CandidateTags]</InArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="out_candidateJson">[out_CandidateJson]</OutArgument>
+                  <OutArgument x:TypeArguments="scg:List(ui:UiElement)" x:Key="out_candidateUiElements">[out_CandidateUiElements]</OutArgument>
+                  <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_liElements">[liElements]</InArgument>
+                </ui:InvokeCode.Arguments>
+              </ui:InvokeCode>
+            </Sequence>
+          </ActivityAction>
+        </ui:BrowserScope.Body>
+      </ui:BrowserScope>
+    </Sequence>
+  </Sequence>
+</Activity>

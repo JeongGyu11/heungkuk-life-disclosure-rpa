@@ -1,0 +1,105 @@
+{
+  "DisplayName": "Main",
+  "Tooltip": null,
+  "HelpLink": null,
+  "Color": null,
+  "OriginalIconFileName": null,
+  "Arguments": [
+    {
+      "Name": "in_ControlCode",
+      "DisplayName": "in_ControlCode",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "MAIL01",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_MaxSteps",
+      "DisplayName": "in_MaxSteps",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "20",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_StartUrl",
+      "DisplayName": "in_StartUrl",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "https://www.heungkuklife.co.kr/front/public/saleProduct.do?searchFlgSale=Y",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_ObjectiveText",
+      "DisplayName": "in_ObjectiveText",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_PromptRootFolder",
+      "DisplayName": "in_PromptRootFolder",
+      "Category": null,
+      "Tooltip": "상품별 프롬프트 TXT가 저장된 최상위 폴더",
+      "Placeholder": "C:\\Users\\FAS\\Desktop\\홍국생명보험\\홍국생명_프롬포트",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_LlmApiKey",
+      "DisplayName": "in_LlmApiKey",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_LlmModel",
+      "DisplayName": "in_LlmModel",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "gemma-4-31B-it",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_LlmApiBase",
+      "DisplayName": "in_LlmApiBase",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "https://gemma4-31b-mtp.proxy.ainexus.ktcloud.com/v1",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    }
+  ]
+}

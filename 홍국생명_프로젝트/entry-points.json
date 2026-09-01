@@ -1,0 +1,59 @@
+{
+  "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "6c8eef7c-1c32-4a6d-9ac4-1d3b61430ce6",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "in_ControlCode": {
+            "type": "string",
+            "x-default-expression": "\"MAIL01\"",
+            "default": "MAIL01"
+          },
+          "in_MaxSteps": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647,
+            "x-default-expression": "300",
+            "default": 300
+          },
+          "in_StartUrl": {
+            "type": "string",
+            "x-default-expression": "\"https://www.heungkuklife.co.kr/front/public/saleProduct.do?searchFlgSale=Y\"",
+            "default": "https://www.heungkuklife.co.kr/front/public/saleProduct.do?searchFlgSale=Y"
+          },
+          "in_ObjectiveText": {
+            "type": "string",
+            "x-default-expression": "\"\"",
+            "default": ""
+          },
+          "in_PromptRootFolder": {
+            "type": "string",
+            "description": "상품별 프롬프트 TXT가 저장된 최상위 폴더",
+            "x-default-expression": "\"C:\\Users\\FAS\\Desktop\\홍국생명보험\\홍국생명_프롬포트\"",
+            "default": "C:\\Users\\FAS\\Desktop\\홍국생명보험\\홍국생명_프롬포트"
+          },
+          "in_LlmApiKey": {
+            "type": "string",
+            "x-default-expression": "\"\"",
+            "default": ""
+          },
+          "in_LlmModel": {
+            "type": "string",
+            "x-default-expression": "\"gemma-4-31B-it\"",
+            "default": "gemma-4-31B-it"
+          },
+          "in_LlmApiBase": {
+            "type": "string",
+            "x-default-expression": "\"https://gemma4-31b-mtp.proxy.ainexus.ktcloud.com/v1\"",
+            "default": "https://gemma4-31b-mtp.proxy.ainexus.ktcloud.com/v1"
+          }
+        },
+        "required": []
+      }
+    }
+  ]
+}

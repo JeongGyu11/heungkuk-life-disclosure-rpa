@@ -1,0 +1,61 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Load_Objective_From_Text" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_PromptRootFolder" Type="InArgument(x:String)" />
+    <x:Property Name="in_PromptIndex" Type="InArgument(x:Int32)" />
+    <x:Property Name="out_ObjectiveText" Type="OutArgument(x:String)" />
+    <x:Property Name="out_PromptFilePath" Type="OutArgument(x:String)" />
+    <x:Property Name="out_PromptCount" Type="OutArgument(x:Int32)" />
+    <x:Property Name="out_HasPrompt" Type="OutArgument(x:Boolean)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Load Objective From Text" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim rootFolder As String = If(in_PromptRootFolder, String.Empty).Trim()&#xA;&#xA;If String.IsNullOrWhiteSpace(rootFolder) Then&#xA;    Throw New ArgumentException(&quot;프롬프트 루트 폴더가 비어 있습니다.&quot;)&#xA;End If&#xA;&#xA;rootFolder = System.IO.Path.GetFullPath(rootFolder)&#xA;&#xA;If Not System.IO.Directory.Exists(rootFolder) Then&#xA;    Throw New System.IO.DirectoryNotFoundException(&quot;프롬프트 루트 폴더가 존재하지 않습니다: &quot; &amp; rootFolder)&#xA;End If&#xA;&#xA;Dim promptFiles As String() = System.IO.Directory.GetFiles(rootFolder, &quot;*.txt&quot;, System.IO.SearchOption.AllDirectories)&#xA;System.Array.Sort(promptFiles, System.StringComparer.OrdinalIgnoreCase)&#xA;&#xA;out_PromptCount = promptFiles.Length&#xA;out_PromptFilePath = String.Empty&#xA;out_ObjectiveText = String.Empty&#xA;out_HasPrompt = False&#xA;&#xA;If promptFiles.Length = 0 Then&#xA;    Throw New System.IO.FileNotFoundException(&quot;프롬프트 TXT 파일을 찾지 못했습니다: &quot; &amp; rootFolder)&#xA;End If&#xA;&#xA;If in_PromptIndex &gt;= 0 AndAlso in_PromptIndex &lt; promptFiles.Length Then&#xA;    Dim selectedPath As String = promptFiles(in_PromptIndex)&#xA;    Dim selectedText As String = System.IO.File.ReadAllText(selectedPath, System.Text.Encoding.UTF8).Trim()&#xA;&#xA;    If String.IsNullOrWhiteSpace(selectedText) Then&#xA;        Throw New Exception(&quot;프롬프트 TXT 파일이 비어 있습니다: &quot; &amp; selectedPath)&#xA;    End If&#xA;&#xA;    out_PromptFilePath = selectedPath&#xA;    out_ObjectiveText = selectedText&#xA;    out_HasPrompt = True&#xA;End If" DisplayName="Find and Read Prompt Text" sap2010:WorkflowViewState.IdRef="InvokeCode_LoadPrompt">
+      <ui:InvokeCode.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_PromptRootFolder">[in_PromptRootFolder]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_PromptIndex">[in_PromptIndex]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_ObjectiveText">[out_ObjectiveText]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_PromptFilePath">[out_PromptFilePath]</OutArgument>
+        <OutArgument x:TypeArguments="x:Int32" x:Key="out_PromptCount">[out_PromptCount]</OutArgument>
+        <OutArgument x:TypeArguments="x:Boolean" x:Key="out_HasPrompt">[out_HasPrompt]</OutArgument>
+      </ui:InvokeCode.Arguments>
+    </ui:InvokeCode>
+    <WriteLine DisplayName="Write Loaded Prompt" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;Prompt &quot; &amp; (in_PromptIndex + 1).ToString() &amp; &quot;/&quot; &amp; out_PromptCount.ToString() &amp; Environment.NewLine &amp; out_PromptFilePath]" />
+  </Sequence>
+</Activity>

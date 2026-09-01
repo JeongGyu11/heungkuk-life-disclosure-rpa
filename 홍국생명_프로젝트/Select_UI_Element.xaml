@@ -1,0 +1,992 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Select_UI_Element" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_ErrorMessage" Type="OutArgument(x:String)" />
+    <x:Property Name="out_SelectSuccess" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="out_LlmStatusCode" Type="OutArgument(x:Int32)" />
+    <x:Property Name="out_LlmRawResponse" Type="OutArgument(x:String)" />
+    <x:Property Name="out_LlmContent" Type="OutArgument(x:String)" />
+    <x:Property Name="out_SelectedElementId" Type="OutArgument(x:String)" />
+    <x:Property Name="in_LlmApiKey" Type="InArgument(x:String)" />
+    <x:Property Name="in_LlmModel" Type="InArgument(x:String)" />
+    <x:Property Name="in_LlmApiBase" Type="InArgument(x:String)" />
+    <x:Property Name="in_ValueKind" Type="InArgument(x:String)" />
+    <x:Property Name="in_Operation" Type="InArgument(x:String)" />
+    <x:Property Name="in_Objective" Type="InArgument(x:String)" />
+    <x:Property Name="in_ActionKey" Type="InArgument(x:String)" />
+    <x:Property Name="in_CandidateJson" Type="InArgument(x:String)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Select_UI_Element_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>System.Dynamic</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Collections.Specialized</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Collections.Specialized</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>NPOI.Core</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Select_UI_Element" sap:VirtualizedContainerService.HintSize="1160,2675" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="njl:JToken" Name="selectedCandidateToken" />
+      <Variable x:TypeArguments="njl:JArray" Name="candidateArray" />
+      <Variable x:TypeArguments="njl:JObject" Name="candidateObject" />
+      <Variable x:TypeArguments="njl:JObject" Name="selectionObject" />
+      <Variable x:TypeArguments="njl:JObject" Name="responseObject" />
+      <Variable x:TypeArguments="x:String" Name="requestBodyJson" />
+      <Variable x:TypeArguments="njl:JObject" Name="requestBody" />
+      <Variable x:TypeArguments="x:String" Name="userPrompt" />
+      <Variable x:TypeArguments="x:String" Name="systemPrompt" />
+      <Variable x:TypeArguments="x:String" Name="requestUrl" />
+      <Variable x:TypeArguments="x:String" Name="normalizedApiBase" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence sap:VirtualizedContainerService.HintSize="582,2652" sap2010:WorkflowViewState.IdRef="Sequence_5">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <TryCatch DisplayName="Try Catch - Select UI Element" sap:VirtualizedContainerService.HintSize="548,2569" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+        <TryCatch.Try>
+          <Sequence DisplayName="UI 요소 선택 처리" sap:VirtualizedContainerService.HintSize="546,2049" sap2010:WorkflowViewState.IdRef="Sequence_6">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:MultipleAssign DisplayName="Select UI Element 내부 초기화" sap:VirtualizedContainerService.HintSize="512,57" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+              <ui:MultipleAssign.AssignOperations>
+                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="32">
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[out_SelectedElementId]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[out_LlmContent]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[out_LlmRawResponse]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:Int32">[out_LlmStatusCode]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:Int32">0</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:Boolean">[out_SelectSuccess]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[normalizedApiBase]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[requestUrl]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[systemPrompt]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[userPrompt]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="njl:JObject">[requestBody]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="njl:JObject">[Nothing]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_12">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[requestBodyJson]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="njl:JObject">[responseObject]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="njl:JObject">[Nothing]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="njl:JObject">[selectionObject]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="njl:JObject">[Nothing]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="njl:JObject">[candidateObject]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="njl:JObject">[Nothing]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_16">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="njl:JArray">[candidateArray]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="njl:JArray">[Nothing]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_17">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="njl:JToken">[selectedCandidateToken]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="njl:JToken">[Nothing]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                </scg:List>
+              </ui:MultipleAssign.AssignOperations>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:MultipleAssign>
+            <Sequence DisplayName="입력 검증 및 Candidate JSON 파싱" sap:VirtualizedContainerService.HintSize="486,1199" sap2010:WorkflowViewState.IdRef="Sequence_10">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If Condition="[String.IsNullOrWhiteSpace(in_CandidateJson)]" DisplayName="Candidate JSON 입력 검증" sap:VirtualizedContainerService.HintSize="452,57" sap2010:WorkflowViewState.IdRef="If_2">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence DisplayName="Candidate JSON 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw Candidate JSON Empty" Exception="[New System.Exception(&quot;UI 후보 JSON이 비어 있습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="Candidate JSON 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <If Condition="[String.IsNullOrWhiteSpace(in_Operation)]" DisplayName="Operation 입력 검증" sap:VirtualizedContainerService.HintSize="452,403" sap2010:WorkflowViewState.IdRef="If_3">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence DisplayName="Operation 입력 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw Operation Empty" Exception="[New System.Exception(&quot;UI 요소 선택 대상 operation이 비어 있습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="Operation 입력 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <If Condition="[in_Operation.Trim().ToUpperInvariant() &lt;&gt; &quot;CLICK&quot; AndAlso in_Operation.Trim().ToUpperInvariant() &lt;&gt; &quot;TYPE_INTO&quot; AndAlso in_Operation.Trim().ToUpperInvariant() &lt;&gt; &quot;DOWNLOAD&quot;]" DisplayName="지원 Operation 검증" sap:VirtualizedContainerService.HintSize="452,403" sap2010:WorkflowViewState.IdRef="If_4">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence DisplayName="지원하지 않는 Operation" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw Unsupported Operation" Exception="[New System.Exception(&quot;UI 요소 선택을 지원하지 않는 operation입니다: &quot; &amp; in_Operation)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="지원 Operation 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <If Condition="[String.IsNullOrWhiteSpace(in_LlmApiBase)]" DisplayName="LLM API Base 입력 검증" sap:VirtualizedContainerService.HintSize="452,57" sap2010:WorkflowViewState.IdRef="If_5">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence DisplayName="LLM API Base 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw LLM API Base Empty" Exception="[New System.Exception(&quot;LLM API Base가 비어 있습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_4" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="LLM API Base 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <If Condition="[String.IsNullOrWhiteSpace(in_LlmModel)]" DisplayName="LLM Model 입력 검증" sap:VirtualizedContainerService.HintSize="452,57" sap2010:WorkflowViewState.IdRef="If_6">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence DisplayName="LLM Model 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw LLM Model Empty" Exception="[New System.Exception(&quot;LLM Model이 비어 있습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_5" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="LLM Model 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <Assign DisplayName="Candidate JSON JObject 파싱" sap:VirtualizedContainerService.HintSize="452,57" sap2010:WorkflowViewState.IdRef="Assign_1">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="njl:JObject">[candidateObject]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="njl:JObject">[Newtonsoft.Json.Linq.JObject.Parse(in_CandidateJson)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <Assign DisplayName="Candidates 배열 추출" sap:VirtualizedContainerService.HintSize="452,57" sap2010:WorkflowViewState.IdRef="Assign_2">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="njl:JArray">[candidateArray]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="njl:JArray" xml:space="preserve">[TryCast(
+    candidateObject.SelectToken("candidates"),
+    Newtonsoft.Json.Linq.JArray
+)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <If Condition="[candidateArray Is Nothing OrElse candidateArray.Count = 0]" DisplayName="Candidates 배열 검증" sap:VirtualizedContainerService.HintSize="452,48" sap2010:WorkflowViewState.IdRef="If_7">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence DisplayName="Candidates 배열 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw Candidates Empty" Exception="[New System.Exception(&quot;UI 후보 JSON에 candidates 배열이 없거나 후보가 0개입니다.&quot;)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="Candidates 배열 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim compactRoot As New Newtonsoft.Json.Linq.JObject()&#xA;Dim compactArray As New Newtonsoft.Json.Linq.JArray()&#xA;Dim normalizedOperation As String = If(operationText, String.Empty).Trim().ToUpperInvariant()&#xA;Dim rawObjective As String = If(objectiveText, String.Empty)&#xA;Dim normalizedObjective As String = System.Text.RegularExpressions.Regex.Replace(rawObjective.ToLowerInvariant(), &quot;[^\p{L}\p{Nd}]&quot;, String.Empty)&#xA;Dim objectiveParts As String() = rawObjective.Split(&quot;,&quot;c)&#xA;Dim normalizedTargetDocument As String = System.Text.RegularExpressions.Regex.Replace(If(objectiveParts.Length &gt; 0, objectiveParts(objectiveParts.Length - 1), String.Empty).ToLowerInvariant(), &quot;[^\p{L}\p{Nd}]&quot;, String.Empty)&#xA;Dim dateMatch As System.Text.RegularExpressions.Match = System.Text.RegularExpressions.Regex.Match(If(actionKeyText, String.Empty), &quot;(\d{8})$&quot;)&#xA;Dim requiredDate As String = If(dateMatch.Success, dateMatch.Groups(1).Value, String.Empty)&#xA;&#xA;Dim allowedFields As String() = {&#xA;    &quot;element_id&quot;,&#xA;    &quot;tag&quot;,&#xA;    &quot;role&quot;,&#xA;    &quot;control_type&quot;,&#xA;    &quot;text&quot;,&#xA;    &quot;aaname&quot;,&#xA;    &quot;title&quot;,&#xA;    &quot;aria_label&quot;,&#xA;    &quot;placeholder&quot;,&#xA;    &quot;input_type&quot;,&#xA;    &quot;row_text&quot;,&#xA;    &quot;cell_text&quot;,&#xA;    &quot;column_index&quot;,&#xA;    &quot;column_header&quot;,&#xA;    &quot;table_context&quot;,&#xA;    &quot;is_enabled&quot;,&#xA;    &quot;is_clickable&quot;,&#xA;    &quot;is_input_candidate&quot;,&#xA;    &quot;is_editable&quot;&#xA;}&#xA;&#xA;For Each candidateToken As Newtonsoft.Json.Linq.JToken In sourceCandidates&#xA;    Dim sourceObject As Newtonsoft.Json.Linq.JObject =&#xA;        TryCast(candidateToken, Newtonsoft.Json.Linq.JObject)&#xA;&#xA;    If sourceObject Is Nothing Then&#xA;        Continue For&#xA;    End If&#xA;&#xA;    If normalizedOperation = &quot;DOWNLOAD&quot; Then&#xA;        Dim rowText As String = If(sourceObject(&quot;row_text&quot;) Is Nothing, String.Empty, sourceObject(&quot;row_text&quot;).ToString())&#xA;        Dim tableContext As String = If(sourceObject(&quot;table_context&quot;) Is Nothing, String.Empty, sourceObject(&quot;table_context&quot;).ToString())&#xA;        Dim columnHeader As String = If(sourceObject(&quot;column_header&quot;) Is Nothing, String.Empty, sourceObject(&quot;column_header&quot;).ToString())&#xA;        Dim hasTableRow As Boolean = Not String.IsNullOrWhiteSpace(rowText) OrElse Not String.IsNullOrWhiteSpace(tableContext)&#xA;        Dim hasDocumentColumn As Boolean = Not String.IsNullOrWhiteSpace(columnHeader)&#xA;        If Not hasTableRow OrElse Not hasDocumentColumn Then Continue For&#xA;    End If&#xA;&#xA;    Dim compactItem As New Newtonsoft.Json.Linq.JObject()&#xA;&#xA;    For Each fieldName As String In allowedFields&#xA;        Dim valueToken As Newtonsoft.Json.Linq.JToken = sourceObject(fieldName)&#xA;&#xA;        If valueToken Is Nothing OrElse&#xA;           valueToken.Type = Newtonsoft.Json.Linq.JTokenType.Null Then&#xA;            Continue For&#xA;        End If&#xA;&#xA;        If valueToken.Type = Newtonsoft.Json.Linq.JTokenType.String AndAlso&#xA;           String.IsNullOrWhiteSpace(valueToken.ToString()) Then&#xA;            Continue For&#xA;        End If&#xA;&#xA;        If valueToken.Type = Newtonsoft.Json.Linq.JTokenType.Integer AndAlso&#xA;           valueToken.ToObject(Of Integer)() &lt; 0 Then&#xA;            Continue For&#xA;        End If&#xA;&#xA;        compactItem(fieldName) = valueToken.DeepClone()&#xA;    Next&#xA;&#xA;    compactArray.Add(compactItem)&#xA;Next&#xA;&#xA;If normalizedOperation = &quot;DOWNLOAD&quot; AndAlso compactArray.Count = 0 Then&#xA;    Throw New System.Exception(&quot;표의 판매기간 행과 문서 열에 해당하는 다운로드 후보가 없습니다. Date=&quot; &amp; requiredDate)&#xA;End If&#xA;&#xA;compactRoot(&quot;operation&quot;) = normalizedOperation&#xA;compactRoot(&quot;required_date&quot;) = requiredDate&#xA;compactRoot(&quot;candidate_count&quot;) = compactArray.Count&#xA;compactRoot(&quot;candidates&quot;) = compactArray&#xA;compactCandidateObject = compactRoot" DisplayName="LLM 후보 JSON 압축 및 DOWNLOAD 표 구조 검증" sap:VirtualizedContainerService.HintSize="452,197" sap2010:WorkflowViewState.IdRef="InvokeCode_CompactCandidates_1">
+                <ui:InvokeCode.Arguments>
+                  <InArgument x:TypeArguments="njl:JArray" x:Key="sourceCandidates">[candidateArray]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="operationText">[in_Operation]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="actionKeyText">[in_ActionKey]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="objectiveText">[in_Objective]</InArgument>
+                  <OutArgument x:TypeArguments="njl:JObject" x:Key="compactCandidateObject">[candidateObject]</OutArgument>
+                </ui:InvokeCode.Arguments>
+              </ui:InvokeCode>
+              <WriteLine DisplayName="압축 후보 정보 출력" sap:VirtualizedContainerService.HintSize="452,62" sap2010:WorkflowViewState.IdRef="WriteLine_CompactCandidates_1" Text="[&quot;UI Candidate Payload - OriginalCount=&quot; &amp; candidateArray.Count.ToString() &amp; &quot;, EligibleCount=&quot; &amp; DirectCast(candidateObject(&quot;candidates&quot;), Newtonsoft.Json.Linq.JArray).Count.ToString() &amp; &quot;, CompactLength=&quot; &amp; candidateObject.ToString(Newtonsoft.Json.Formatting.None).Length.ToString()]" />
+            </Sequence>
+            <Sequence DisplayName="LLM 요청 데이터 생성" sap:VirtualizedContainerService.HintSize="512,482" sap2010:WorkflowViewState.IdRef="Sequence_12">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign DisplayName="LLM API Base 정규화" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="Assign_9">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[normalizedApiBase]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[in_LlmApiBase.Trim().TrimEnd("/"c)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <Assign DisplayName="Chat Completions 요청 URL 생성" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="Assign_10">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[requestUrl]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String" xml:space="preserve">[If(
+    normalizedApiBase.EndsWith(
+        "/chat/completions",
+        System.StringComparison.OrdinalIgnoreCase
+    ),
+    normalizedApiBase,
+    If(
+        normalizedApiBase.EndsWith(
+            "/v1",
+            System.StringComparison.OrdinalIgnoreCase
+        ),
+        normalizedApiBase &amp; "/chat/completions",
+        normalizedApiBase &amp; "/v1/chat/completions"
+    )
+)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <Assign DisplayName="UI 요소 선택 System Prompt 생성" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="Assign_11">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[systemPrompt]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String" xml:space="preserve">["당신은 UI 자동화 후보 요소 선택기입니다." &amp;
+Environment.NewLine &amp;
+"입력된 작업 정보와 candidates 배열을 분석하여 작업 대상 요소를 선택하십시오." &amp;
+Environment.NewLine &amp;
+Environment.NewLine &amp;
+"선택 규칙:" &amp;
+Environment.NewLine &amp;
+"1. 반드시 입력된 candidates 배열 안의 element_id만 사용하십시오." &amp;
+Environment.NewLine &amp;
+"2. element_id를 추측하거나 새로 만들지 마십시오." &amp;
+Environment.NewLine &amp;
+"3. CLICK 작업은 클릭 가능한 버튼, 링크, 메뉴, 체크박스 등의 후보를 선택하십시오." &amp;
+Environment.NewLine &amp;
+"4. TYPE_INTO 작업은 입력 가능한 INPUT, TEXTAREA, 편집 필드 등의 후보를 선택하십시오." &amp;
+Environment.NewLine &amp;
+"5. objective, action_key, operation, value_kind와 후보의 의미 정보를 함께 판단하십시오." &amp;
+Environment.NewLine &amp;
+"6. DOWNLOAD 작업에서는 objective와 action_key의 판매기간 시작일을 후보의 row_text 또는 table_context와 대조하고, 요청 문서명을 column_header와 대조하십시오. 날짜는 점, 하이픈, 공백을 제거한 숫자 기준으로 비교하십시오." &amp;
+Environment.NewLine &amp;
+"7. PDF라는 text만으로 선택하지 마십시오. 판매기간이 일치하고 문서 열이 일치하는 후보를 우선하며, 상품명이나 상품코드가 제공되면 row_text와 table_context에서도 함께 확인하십시오." &amp;
+Environment.NewLine &amp;
+"8. 동일 조건을 만족하는 후보가 하나라면 그 후보를 선택하십시오. 근거가 전혀 없는 경우에만 빈 문자열을 반환하십시오." &amp;
+Environment.NewLine &amp;
+"9. selector, XPath, CSS 또는 좌표를 반환하지 마십시오." &amp;
+Environment.NewLine &amp;
+"10. 마크다운 코드 블록을 사용하지 마십시오." &amp;
+Environment.NewLine &amp;
+Environment.NewLine &amp;
+"반드시 다음 형식의 JSON 객체 하나만 반환하십시오:" &amp;
+Environment.NewLine &amp;
+"{""selected_element_id"":""E001"",""reason"":""선택 근거를 짧게 작성""}"]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <Assign DisplayName="UI 요소 선택 User Prompt 생성" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="Assign_12">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[userPrompt]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String" xml:space="preserve">["작업 정보:" &amp;
+Environment.NewLine &amp;
+"- operation: " &amp;
+in_Operation.Trim().ToUpperInvariant() &amp;
+Environment.NewLine &amp;
+"- action_key: " &amp;
+If(
+    in_ActionKey Is Nothing,
+    String.Empty,
+    in_ActionKey.Trim()
+) &amp;
+Environment.NewLine &amp;
+"- objective: " &amp;
+If(
+    in_Objective Is Nothing,
+    String.Empty,
+    in_Objective.Trim()
+) &amp;
+Environment.NewLine &amp;
+"- value_kind: " &amp;
+If(
+    in_ValueKind Is Nothing,
+    String.Empty,
+    in_ValueKind.Trim()
+) &amp;
+Environment.NewLine &amp;
+Environment.NewLine &amp;
+"후보 JSON:" &amp;
+Environment.NewLine &amp;
+candidateObject.ToString(
+    Newtonsoft.Json.Formatting.None
+)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <Assign DisplayName="LLM 요청 JObject 생성" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="Assign_13">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="njl:JObject">[requestBody]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="njl:JObject" xml:space="preserve">[New Newtonsoft.Json.Linq.JObject(
+    New Newtonsoft.Json.Linq.JProperty(
+        "model",
+        in_LlmModel.Trim()
+    ),
+    New Newtonsoft.Json.Linq.JProperty(
+        "temperature",
+        0.0
+    ),
+    New Newtonsoft.Json.Linq.JProperty(
+        "stream",
+        False
+    ),
+    New Newtonsoft.Json.Linq.JProperty(
+        "max_tokens",
+        512
+    ),
+    New Newtonsoft.Json.Linq.JProperty(
+        "messages",
+        New Newtonsoft.Json.Linq.JArray(
+            New Newtonsoft.Json.Linq.JObject(
+                New Newtonsoft.Json.Linq.JProperty(
+                    "role",
+                    "system"
+                ),
+                New Newtonsoft.Json.Linq.JProperty(
+                    "content",
+                    systemPrompt
+                )
+            ),
+            New Newtonsoft.Json.Linq.JObject(
+                New Newtonsoft.Json.Linq.JProperty(
+                    "role",
+                    "user"
+                ),
+                New Newtonsoft.Json.Linq.JProperty(
+                    "content",
+                    userPrompt
+                )
+            )
+        )
+    )
+)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <Assign DisplayName="LLM 요청 JSON 문자열 생성" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="Assign_14">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[requestBodyJson]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String" xml:space="preserve">[requestBody.ToString(
+    Newtonsoft.Json.Formatting.None
+)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(requestUrl) OrElse String.IsNullOrWhiteSpace(requestBodyJson)]" DisplayName="LLM 요청 데이터 최종 검증" sap:VirtualizedContainerService.HintSize="416,48" sap2010:WorkflowViewState.IdRef="If_9">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence DisplayName="LLM 요청 데이터 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw LLM Request Data Error" Exception="[New System.Exception(&quot;LLM 요청 URL 또는 요청 JSON 생성에 실패했습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_8" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="LLM 요청 데이터 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+            <Sequence DisplayName="LLM API 호출 및 응답 추출" sap:VirtualizedContainerService.HintSize="512,57" sap2010:WorkflowViewState.IdRef="Sequence_13">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_LlmRawResponse = String.Empty&#xA;out_LlmStatusCode = 0&#xA;&#xA;Using httpClient As New System.Net.Http.HttpClient()&#xA;    httpClient.Timeout = System.TimeSpan.FromSeconds(120)&#xA;&#xA;    httpClient.DefaultRequestHeaders.Accept.Clear()&#xA;    httpClient.DefaultRequestHeaders.Accept.Add(&#xA;        New System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(&quot;application/json&quot;)&#xA;    )&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(in_LlmApiKey) Then&#xA;        Dim normalizedApiKey As String = in_LlmApiKey.Trim()&#xA;&#xA;        If normalizedApiKey.StartsWith(&#xA;            &quot;Bearer &quot;,&#xA;            System.StringComparison.OrdinalIgnoreCase&#xA;        ) Then&#xA;            httpClient.DefaultRequestHeaders.Authorization =&#xA;                System.Net.Http.Headers.AuthenticationHeaderValue.Parse(&#xA;                    normalizedApiKey&#xA;                )&#xA;        Else&#xA;            httpClient.DefaultRequestHeaders.Authorization =&#xA;                New System.Net.Http.Headers.AuthenticationHeaderValue(&#xA;                    &quot;Bearer&quot;,&#xA;                    normalizedApiKey&#xA;                )&#xA;        End If&#xA;    End If&#xA;&#xA;    Using requestContent As New System.Net.Http.StringContent(&#xA;        requestBodyJson,&#xA;        System.Text.Encoding.UTF8,&#xA;        &quot;application/json&quot;&#xA;    )&#xA;        Using httpResponse As System.Net.Http.HttpResponseMessage =&#xA;            httpClient.PostAsync(&#xA;                requestUrl,&#xA;                requestContent&#xA;            ).GetAwaiter().GetResult()&#xA;&#xA;            out_LlmStatusCode = CInt(httpResponse.StatusCode)&#xA;&#xA;            out_LlmRawResponse =&#xA;                httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult()&#xA;        End Using&#xA;    End Using&#xA;End Using" DisplayName="LLM Chat Completions HTTP POST" sap:VirtualizedContainerService.HintSize="452,197" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+                <ui:InvokeCode.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="requestUrl">[requestUrl]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="requestBodyJson">[requestBodyJson]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_LlmApiKey">[in_LlmApiKey]</InArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="out_LlmRawResponse">[out_LlmRawResponse]</OutArgument>
+                  <OutArgument x:TypeArguments="x:Int32" x:Key="out_LlmStatusCode">[out_LlmStatusCode]</OutArgument>
+                </ui:InvokeCode.Arguments>
+              </ui:InvokeCode>
+              <If Condition="[out_LlmStatusCode &lt; 200 OrElse out_LlmStatusCode &gt;= 300]" DisplayName="LLM HTTP 상태 코드 검증" sap:VirtualizedContainerService.HintSize="452,403" sap2010:WorkflowViewState.IdRef="If_10">
+                <If.Then>
+                  <Sequence DisplayName="LLM HTTP 요청 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw LLM HTTP Error" Exception="[New System.Exception(     &quot;LLM API 요청에 실패했습니다. &quot; &amp;     &quot;StatusCode=&quot; &amp;     out_LlmStatusCode.ToString() &amp;     &quot;, Response=&quot; &amp;     If(         String.IsNullOrWhiteSpace(out_LlmRawResponse),         &quot;(empty)&quot;,         out_LlmRawResponse.Substring(             0,             Math.Min(                 2000,                 out_LlmRawResponse.Length             )         )     ) )]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_9" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="LLM HTTP 상태 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <If Condition="[String.IsNullOrWhiteSpace(out_LlmRawResponse)]" DisplayName="LLM 응답 본문 검증" sap:VirtualizedContainerService.HintSize="452,403" sap2010:WorkflowViewState.IdRef="If_11">
+                <If.Then>
+                  <Sequence DisplayName="LLM 응답 본문 오류" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw LLM Response Empty" Exception="[New System.Exception(     &quot;LLM API 응답 본문이 비어 있습니다. StatusCode=&quot; &amp;     out_LlmStatusCode.ToString() )]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_10" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="LLM 응답 본문 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_32">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <Assign DisplayName="LLM 응답 JObject 파싱" sap:VirtualizedContainerService.HintSize="452,57" sap2010:WorkflowViewState.IdRef="Assign_15">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="njl:JObject">[responseObject]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="njl:JObject">[Newtonsoft.Json.Linq.JObject.Parse(out_LlmRawResponse)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <Assign DisplayName="LLM Content 추출" sap:VirtualizedContainerService.HintSize="452,57" sap2010:WorkflowViewState.IdRef="Assign_16">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[out_LlmContent]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String" xml:space="preserve">[If(
+    responseObject.SelectToken(
+        "choices[0].message.content"
+    ) IsNot Nothing,
+    responseObject.SelectToken(
+        "choices[0].message.content"
+    ).ToString().Trim(),
+    If(
+        responseObject.SelectToken(
+            "choices[0].text"
+        ) IsNot Nothing,
+        responseObject.SelectToken(
+            "choices[0].text"
+        ).ToString().Trim(),
+        String.Empty
+    )
+)]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(out_LlmContent)]" DisplayName="LLM Content 검증" sap:VirtualizedContainerService.HintSize="452,328" sap2010:WorkflowViewState.IdRef="If_12">
+                <If.Then>
+                  <Sequence DisplayName="LLM Content 오류" sap:VirtualizedContainerService.HintSize="450,108" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw LLM Content Empty" Exception="[New System.Exception(     &quot;LLM 응답에서 choices[0].message.content를 추출하지 못했습니다. &quot; &amp;     &quot;StatusCode=&quot; &amp;     out_LlmStatusCode.ToString() )]" sap:VirtualizedContainerService.HintSize="416,48" sap2010:WorkflowViewState.IdRef="Throw_11">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </Throw>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="LLM Content 정상" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <WriteLine DisplayName="LLM 선택 응답 출력" sap:VirtualizedContainerService.HintSize="452,62" sap2010:WorkflowViewState.IdRef="WriteLine_LlmSelectionResponse_1" Text="[&quot;LLM Selection Response: &quot; &amp; out_LlmContent]" />
+            </Sequence>
+            <Sequence DisplayName="LLM 선택 결과 검증 및 반환" sap:VirtualizedContainerService.HintSize="512,854" sap2010:WorkflowViewState.IdRef="Sequence_14">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InvokeCode ContinueOnError="{x:Null}" Code="selectionObject = Nothing&#xA;selectedCandidateToken = Nothing&#xA;selectedElementId = String.Empty&#xA;&#xA;If candidateArray Is Nothing OrElse candidateArray.Count = 0 Then&#xA;    Throw New System.Exception(&quot;검증할 UI 후보 배열이 없거나 비어 있습니다.&quot;)&#xA;End If&#xA;&#xA;Dim content As String =&#xA;    If(llmContentText, String.Empty).Trim()&#xA;&#xA;If String.IsNullOrWhiteSpace(content) Then&#xA;    Throw New System.Exception(&quot;LLM 선택 결과 Content가 비어 있습니다.&quot;)&#xA;End If&#xA;&#xA;' 모델이 JSON 앞뒤에 설명이나 Markdown 코드 블록을 붙인 경우에도&#xA;' 첫 번째 { 부터 마지막 } 까지만 추출합니다.&#xA;Dim firstBraceIndex As Integer = content.IndexOf(&quot;{&quot;c)&#xA;Dim lastBraceIndex As Integer = content.LastIndexOf(&quot;}&quot;c)&#xA;&#xA;If firstBraceIndex &lt; 0 OrElse&#xA;   lastBraceIndex &lt; firstBraceIndex Then&#xA;&#xA;    Throw New System.Exception(&#xA;        &quot;LLM 선택 결과에서 JSON 객체를 찾지 못했습니다. Content=&quot; &amp;&#xA;        content.Substring(&#xA;            0,&#xA;            System.Math.Min(1000, content.Length)&#xA;        )&#xA;    )&#xA;End If&#xA;&#xA;Dim selectionJsonText As String = content.Substring(&#xA;    firstBraceIndex,&#xA;    lastBraceIndex - firstBraceIndex + 1&#xA;)&#xA;&#xA;selectionObject = Newtonsoft.Json.Linq.JObject.Parse(&#xA;    selectionJsonText&#xA;)&#xA;&#xA;Dim selectedIdToken As Newtonsoft.Json.Linq.JToken =&#xA;    selectionObject.SelectToken(&quot;selected_element_id&quot;)&#xA;&#xA;If selectedIdToken Is Nothing OrElse&#xA;   selectedIdToken.Type = Newtonsoft.Json.Linq.JTokenType.Null Then&#xA;&#xA;    Throw New System.Exception(&#xA;        &quot;LLM 선택 결과에 selected_element_id가 없습니다.&quot;&#xA;    )&#xA;End If&#xA;&#xA;Dim selectedId As String = selectedIdToken.ToString().Trim()&#xA;&#xA;If String.IsNullOrWhiteSpace(selectedId) Then&#xA;    Throw New System.Exception(&#xA;        &quot;LLM이 적합한 UI 후보를 선택하지 못했습니다.&quot;&#xA;    )&#xA;End If&#xA;&#xA;If Not System.Text.RegularExpressions.Regex.IsMatch(&#xA;    selectedId,&#xA;    &quot;^E\d{3,}$&quot;,&#xA;    System.Text.RegularExpressions.RegexOptions.CultureInvariant&#xA;) Then&#xA;&#xA;    Throw New System.Exception(&#xA;        &quot;LLM이 반환한 element_id 형식이 올바르지 않습니다: &quot; &amp;&#xA;        selectedId&#xA;    )&#xA;End If&#xA;&#xA;Dim eligibleIdFound As Boolean = False&#xA;If eligibleCandidates IsNot Nothing Then&#xA;    For Each eligibleToken As Newtonsoft.Json.Linq.JToken In eligibleCandidates&#xA;        Dim eligibleIdToken As Newtonsoft.Json.Linq.JToken = eligibleToken.SelectToken(&quot;element_id&quot;)&#xA;        If eligibleIdToken IsNot Nothing AndAlso String.Equals(eligibleIdToken.ToString().Trim(), selectedId, System.StringComparison.Ordinal) Then&#xA;            eligibleIdFound = True&#xA;            Exit For&#xA;        End If&#xA;    Next&#xA;End If&#xA;&#xA;If Not eligibleIdFound Then&#xA;    Throw New System.Exception(&quot;LLM이 사전 검증을 통과하지 않은 UI 후보를 반환했습니다: &quot; &amp; selectedId)&#xA;End If&#xA;&#xA;For Each candidateToken As Newtonsoft.Json.Linq.JToken In candidateArray&#xA;    Dim candidateIdToken As Newtonsoft.Json.Linq.JToken =&#xA;        candidateToken.SelectToken(&quot;element_id&quot;)&#xA;&#xA;    If candidateIdToken IsNot Nothing AndAlso&#xA;       String.Equals(&#xA;           candidateIdToken.ToString().Trim(),&#xA;           selectedId,&#xA;           System.StringComparison.Ordinal&#xA;       ) Then&#xA;&#xA;        selectedCandidateToken = candidateToken&#xA;        Exit For&#xA;    End If&#xA;Next&#xA;&#xA;If selectedCandidateToken Is Nothing Then&#xA;    Throw New System.Exception(&#xA;        &quot;LLM이 반환한 element_id가 실제 후보 목록에 없습니다: &quot; &amp;&#xA;        selectedId&#xA;    )&#xA;End If&#xA;&#xA;selectedElementId = selectedId" DisplayName="선택 Element ID 파싱 및 후보 존재 검증" sap:VirtualizedContainerService.HintSize="478,197" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+                <ui:InvokeCode.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="llmContentText">[out_LlmContent]</InArgument>
+                  <InArgument x:TypeArguments="njl:JArray" x:Key="candidateArray">[candidateArray]</InArgument>
+                  <InArgument x:TypeArguments="njl:JArray" x:Key="eligibleCandidates">[DirectCast(candidateObject(&quot;candidates&quot;), Newtonsoft.Json.Linq.JArray)]</InArgument>
+                  <OutArgument x:TypeArguments="njl:JObject" x:Key="selectionObject">[selectionObject]</OutArgument>
+                  <OutArgument x:TypeArguments="njl:JToken" x:Key="selectedCandidateToken">[selectedCandidateToken]</OutArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="selectedElementId">[out_SelectedElementId]</OutArgument>
+                </ui:InvokeCode.Arguments>
+              </ui:InvokeCode>
+              <If Condition="[String.IsNullOrWhiteSpace(out_SelectedElementId) OrElse selectedCandidateToken Is Nothing]" DisplayName="선택 Element 최종 검증" sap:VirtualizedContainerService.HintSize="478,403" sap2010:WorkflowViewState.IdRef="If_13">
+                <If.Then>
+                  <Sequence DisplayName="선택 Element 검증 실패" sap:VirtualizedContainerService.HintSize="450,174" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Throw DisplayName="Throw Selected Element Validation Error" Exception="[New System.Exception(     &quot;선택된 UI Element 검증에 실패했습니다. SelectedElementId=&quot; &amp;     If(         String.IsNullOrWhiteSpace(out_SelectedElementId),         &quot;(empty)&quot;,         out_SelectedElementId     ) )]" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="Throw_12" />
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="선택 Element 검증 성공" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </Sequence>
+                </If.Else>
+              </If>
+              <ui:MultipleAssign DisplayName="Select UI Element 성공 반환" sap:VirtualizedContainerService.HintSize="478,171" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+                <ui:MultipleAssign.AssignOperations>
+                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_21">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[out_SelectSuccess]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_22">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                  </scg:List>
+                </ui:MultipleAssign.AssignOperations>
+              </ui:MultipleAssign>
+            </Sequence>
+          </Sequence>
+        </TryCatch.Try>
+        <TryCatch.Catches>
+          <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+            <ActivityAction x:TypeArguments="s:Exception">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Select UI Element 오류 처리" sap:VirtualizedContainerService.HintSize="546,262" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:MultipleAssign DisplayName="Select UI Element 오류 반환" sap:VirtualizedContainerService.HintSize="512,202" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+                  <ui:MultipleAssign.AssignOperations>
+                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
+                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
+                        <ui:AssignOperation.To>
+                          <OutArgument x:TypeArguments="x:String">[out_SelectedElementId]</OutArgument>
+                        </ui:AssignOperation.To>
+                        <ui:AssignOperation.Value>
+                          <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                        </ui:AssignOperation.Value>
+                      </ui:AssignOperation>
+                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_19">
+                        <ui:AssignOperation.To>
+                          <OutArgument x:TypeArguments="x:Boolean">[out_SelectSuccess]</OutArgument>
+                        </ui:AssignOperation.To>
+                        <ui:AssignOperation.Value>
+                          <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                        </ui:AssignOperation.Value>
+                      </ui:AssignOperation>
+                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_20">
+                        <ui:AssignOperation.To>
+                          <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                        </ui:AssignOperation.To>
+                        <ui:AssignOperation.Value>
+                          <InArgument x:TypeArguments="x:String">[exception.GetBaseException().Message]</InArgument>
+                        </ui:AssignOperation.Value>
+                      </ui:AssignOperation>
+                    </scg:List>
+                  </ui:MultipleAssign.AssignOperations>
+                </ui:MultipleAssign>
+              </Sequence>
+            </ActivityAction>
+          </Catch>
+        </TryCatch.Catches>
+        <TryCatch.Finally>
+          <Sequence DisplayName="마지막" sap:VirtualizedContainerService.HintSize="546,90" sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </TryCatch.Finally>
+      </TryCatch>
+    </Sequence>
+  </Sequence>
+</Activity>
