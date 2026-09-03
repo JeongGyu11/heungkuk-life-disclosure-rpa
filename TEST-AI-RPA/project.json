@@ -1,0 +1,196 @@
+{
+  "name": "메리츠 POC",
+  "projectId": "baaca6a2-f462-4e0f-a175-be0a01f4a80d",
+  "description": "빈 프로세스",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.Excel.Activities": "[3.4.1]",
+    "UiPath.Mail.Activities": "[2.7.12]",
+    "UiPath.System.Activities": "[26.6.2]",
+    "UiPath.System.Activities.Runtime": "[26.6.2]",
+    "UiPath.Testing.Activities": "[25.10.1]",
+    "UiPath.UIAutomation.Activities.Runtime": "[25.10.33]",
+    "UiPath.WebAPI.Activities.Runtime": "[2.5.2]"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "25.10.14.0",
+  "projectVersion": "1.0.2",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
+    "workflowSerialization": "NewtonsoftJson",
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true,
+    "pipType": "ChildSession",
+    "robotVersion": "25.10.0"
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "saveToCloud": false
+  },
+  "arguments": {
+    "input": [
+      {
+        "name": "in_StartUrl",
+        "displayName": "in_StartUrl",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "mail.fasol.co.kr"
+      },
+      {
+        "name": "in_ObjectiveText",
+        "displayName": "in_ObjectiveText",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "아이디  parkja@fasol.co.kr, 비밀번호 0303qkr! 로  로그인 후 전체메일함 진입한다. 그 다음 경비 내역서 메일을 열어 경비신청서 첨부파일을 다운로드한다. "
+      },
+      {
+        "name": "in_ControlCode",
+        "displayName": "in_ControlCode",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "MAIL01"
+      },
+      {
+        "name": "in_MaxSteps",
+        "displayName": "in_MaxSteps",
+        "type": "System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "20"
+      },
+      {
+        "name": "in_LlmApiKey",
+        "displayName": "in_LlmApiKey",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "in_LlmModel",
+        "displayName": "in_LlmModel",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "Qwen/Qwen3.5-27B"
+      },
+      {
+        "name": "in_LlmApiBase",
+        "displayName": "in_LlmApiBase",
+        "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+        "required": false,
+        "hasDefault": true,
+        "isExpression": false,
+        "defaultValue": "https://gyncihesvuoxkm-8000.proxy.runpod.net/v1"
+      }
+    ],
+    "output": []
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "6c8eef7c-1c32-4a6d-9ac4-1d3b61430ce6",
+      "input": [
+        {
+          "name": "in_StartUrl",
+          "displayName": "in_StartUrl",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "mail.fasol.co.kr"
+        },
+        {
+          "name": "in_ObjectiveText",
+          "displayName": "in_ObjectiveText",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "아이디  parkja@fasol.co.kr, 비밀번호 0303qkr! 로  로그인 후 전체메일함 진입한다. 그 다음 경비 내역서 메일을 열어 경비신청서 첨부파일을 다운로드한다. "
+        },
+        {
+          "name": "in_ControlCode",
+          "displayName": "in_ControlCode",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "MAIL01"
+        },
+        {
+          "name": "in_MaxSteps",
+          "displayName": "in_MaxSteps",
+          "type": "System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "20"
+        },
+        {
+          "name": "in_LlmApiKey",
+          "displayName": "in_LlmApiKey",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": ""
+        },
+        {
+          "name": "in_LlmModel",
+          "displayName": "in_LlmModel",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "Qwen/Qwen3.5-27B"
+        },
+        {
+          "name": "in_LlmApiBase",
+          "displayName": "in_LlmApiBase",
+          "type": "System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "required": false,
+          "hasDefault": true,
+          "isExpression": false,
+          "defaultValue": "https://gyncihesvuoxkm-8000.proxy.runpod.net/v1"
+        }
+      ],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Windows"
+}
