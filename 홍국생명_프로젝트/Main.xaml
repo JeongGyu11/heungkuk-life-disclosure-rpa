@@ -256,6 +256,7 @@
                     <OutArgument x:TypeArguments="x:Int32" x:Key="out_CompletedStepCount">[runtimeCompletedStepCount]</OutArgument>
                     <OutArgument x:TypeArguments="x:Boolean" x:Key="out_RuntimeSuccess">[stateSucceeded]</OutArgument>
                     <InArgument x:TypeArguments="x:String" x:Key="in_RunId">[runId]</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_PromptFilePath">[currentPromptFilePath]</InArgument>
                     <InArgument x:TypeArguments="x:String" x:Key="in_EvidenceFolder">[evidenceFolder]</InArgument>
                     <InArgument x:TypeArguments="x:String" x:Key="in_LlmModel">[LlmModel]</InArgument>
                     <InArgument x:TypeArguments="x:String" x:Key="in_LlmApiBase">[LlmApiBase]</InArgument>
