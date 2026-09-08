@@ -428,7 +428,7 @@ String.IsNullOrWhiteSpace(collectionMethod) OrElse
                                 <OutArgument x:TypeArguments="x:String">[errorMessage]</OutArgument>
                               </Assign.To>
                               <Assign.Value>
-                                <InArgument x:TypeArguments="x:String" xml:space="preserve">["UI 후보 수집 결과가 없거나 유효하지 않습니다. " &amp;
+                                <InArgument x:TypeArguments="x:String" xml:space="preserve">["NO_CANDIDATE | UI 후보 수집 결과가 없거나 유효하지 않습니다. " &amp;
     "CollectionMethod=" &amp; collectionMethod &amp;
     ", CandidateCount=" &amp; candidateCount.ToString]</InArgument>
                               </Assign.Value>
@@ -539,6 +539,12 @@ String.IsNullOrWhiteSpace(collectionMethod) OrElse
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <State.Transitions>
+        <Transition DisplayName="Download Candidate Collection Failed - Continue" sap2010:WorkflowViewState.IdRef="Transition_CollectDownloadContinue_1">
+          <Transition.To>
+            <x:Reference>__ReferenceID1</x:Reference>
+          </Transition.To>
+          <Transition.Condition>[(Not stateSucceeded OrElse hasRunError) AndAlso currentOperation = "DOWNLOAD"]</Transition.Condition>
+        </Transition>
         <Transition DisplayName="Collect UI Elements Failed" sap:VirtualizedContainerService.HintSize="450,494" sap2010:WorkflowViewState.IdRef="Transition_9">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -547,7 +553,7 @@ String.IsNullOrWhiteSpace(collectionMethod) OrElse
               <x:Int32 x:Key="DestConnectionPointIndex">19</x:Int32>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Transition.Condition>[Not stateSucceeded OrElse hasRunError]</Transition.Condition>
+          <Transition.Condition>[(Not stateSucceeded OrElse hasRunError) AndAlso currentOperation &lt;&gt; "DOWNLOAD"]</Transition.Condition>
           <Transition.To>
             <State x:Name="__ReferenceID0" DisplayName="Handle Error" sap:VirtualizedContainerService.HintSize="150,60" sap2010:WorkflowViewState.IdRef="State_6">
               <State.Entry>
@@ -927,7 +933,7 @@ llmStatusCode &gt;= 300]</InArgument>
                                   <OutArgument x:TypeArguments="x:String">[errorMessage]</OutArgument>
                                 </ui:AssignOperation.To>
                                 <ui:AssignOperation.Value>
-                                  <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                                  <InArgument x:TypeArguments="x:String">[If(String.Equals(selectedElementId, "__NOT_AVAILABLE__", StringComparison.Ordinal), If(If(llmContent, String.Empty).Contains("REVIEW_REQUIRED"), "REVIEW_REQUIRED | " &amp; If(llmContent, String.Empty), "NOT_AVAILABLE | " &amp; If(llmContent, String.Empty)), String.Empty)]</InArgument>
                                 </ui:AssignOperation.Value>
                               </ui:AssignOperation>
                               <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_143">
@@ -1072,6 +1078,18 @@ If(
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
               <State.Transitions>
+                <Transition DisplayName="LLM Not Available - Continue" sap2010:WorkflowViewState.IdRef="Transition_SelectNotAvailable_1">
+                  <Transition.To>
+                    <x:Reference>__ReferenceID1</x:Reference>
+                  </Transition.To>
+                  <Transition.Condition>[stateSucceeded AndAlso Not hasRunError AndAlso String.Equals(selectedElementId, "__NOT_AVAILABLE__", StringComparison.Ordinal) AndAlso currentOperation = "DOWNLOAD"]</Transition.Condition>
+                </Transition>
+                <Transition DisplayName="Download Selection Failed - Continue" sap2010:WorkflowViewState.IdRef="Transition_SelectDownloadContinue_1">
+                  <Transition.To>
+                    <x:Reference>__ReferenceID1</x:Reference>
+                  </Transition.To>
+                  <Transition.Condition>[(Not stateSucceeded OrElse hasRunError) AndAlso currentOperation = "DOWNLOAD"]</Transition.Condition>
+                </Transition>
                 <Transition DisplayName="실패 Transition" sap:VirtualizedContainerService.HintSize="450,494" sap2010:WorkflowViewState.IdRef="Transition_11">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -1083,7 +1101,7 @@ If(
                   <Transition.To>
                     <x:Reference>__ReferenceID0</x:Reference>
                   </Transition.To>
-                  <Transition.Condition>[Not stateSucceeded OrElse hasRunError]</Transition.Condition>
+                  <Transition.Condition>[(Not stateSucceeded OrElse hasRunError) AndAlso currentOperation &lt;&gt; "DOWNLOAD"]</Transition.Condition>
                 </Transition>
                 <Transition DisplayName="성공 Transition" sap:VirtualizedContainerService.HintSize="450,495" sap2010:WorkflowViewState.IdRef="Transition_12">
                   <sap:WorkflowViewStateService.ViewState>
@@ -1093,7 +1111,7 @@ If(
                       <x:Int32 x:Key="DestConnectionPointIndex">38</x:Int32>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Transition.Condition>[stateSucceeded AndAlso Not hasRunError AndAlso Not String.IsNullOrWhiteSpace(selectedElementId)]</Transition.Condition>
+                  <Transition.Condition>[stateSucceeded AndAlso Not hasRunError AndAlso Not String.IsNullOrWhiteSpace(selectedElementId) AndAlso Not String.Equals(selectedElementId, "__NOT_AVAILABLE__", StringComparison.Ordinal)]</Transition.Condition>
                   <Transition.To>
                     <State x:Name="__ReferenceID7" DisplayName="Resolve Selected Element" sap:VirtualizedContainerService.HintSize="150,60" sap2010:WorkflowViewState.IdRef="State_9">
                       <State.Entry>
@@ -1716,7 +1734,7 @@ If(
                                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                             </scg:Dictionary>
                                            </sap:WorkflowViewStateService.ViewState>
-                                          <ui:InvokeCode ContinueOnError="True" Code="Dim logFolder As String = &quot;C:\Users\FAS\Desktop\홍국생명보험&quot;&#xA;System.IO.Directory.CreateDirectory(logFolder)&#xA;&#xA;Dim safeRunId As String = If(in_LogRunId Is Nothing, String.Empty, in_LogRunId.Trim())&#xA;safeRunId = System.Text.RegularExpressions.Regex.Replace(safeRunId, &quot;[^A-Za-z0-9_-]&quot;, &quot;_&quot;)&#xA;If String.IsNullOrWhiteSpace(safeRunId) Then&#xA;    safeRunId = DateTime.Now.ToString(&quot;yyyyMMdd_HHmmss_fff&quot;)&#xA;End If&#xA;&#xA;Dim logFilePath As String = System.IO.Path.Combine(logFolder, &quot;advance_step_log_&quot; &amp; safeRunId &amp; &quot;.txt&quot;)&#xA;Dim resultText As String = If(in_StateSucceeded AndAlso Not in_HasRunError, &quot;SUCCESS&quot;, &quot;FAILED_CONTINUE&quot;)&#xA;Dim normalizedError As String = If(in_ErrorMessage Is Nothing, String.Empty, in_ErrorMessage).Replace(vbCr, &quot; &quot;).Replace(vbLf, &quot; &quot;)&#xA;Dim normalizedPath As String = If(in_DownloadedFilePath Is Nothing, String.Empty, in_DownloadedFilePath).Replace(vbCr, &quot; &quot;).Replace(vbLf, &quot; &quot;)&#xA;&#xA;Dim logLine As String = DateTime.Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.fff&quot;) &amp;&#xA;    &quot; | StepIndex=&quot; &amp; in_StepIndex.ToString() &amp;&#xA;    &quot; | StepId=&quot; &amp; If(in_StepId Is Nothing, String.Empty, in_StepId) &amp;&#xA;    &quot; | Operation=&quot; &amp; If(in_Operation Is Nothing, String.Empty, in_Operation) &amp;&#xA;    &quot; | ActionKey=&quot; &amp; If(in_ActionKey Is Nothing, String.Empty, in_ActionKey) &amp;&#xA;    &quot; | Result=&quot; &amp; resultText &amp;&#xA;    &quot; | DownloadedFile=&quot; &amp; normalizedPath &amp;&#xA;    &quot; | Error=&quot; &amp; normalizedError&#xA;&#xA;System.IO.File.AppendAllText(logFilePath, logLine &amp; Environment.NewLine, New System.Text.UTF8Encoding(False))" DisplayName="Append Advance Step TXT Log" sap2010:WorkflowViewState.IdRef="InvokeCode_AdvanceStepTxtLog_1">
+                                          <ui:InvokeCode ContinueOnError="True" Code="Dim logFolder As String = &quot;C:\Users\FAS\Desktop\홍국생명보험&quot;&#xA;System.IO.Directory.CreateDirectory(logFolder)&#xA;&#xA;Dim safeRunId As String = If(in_LogRunId Is Nothing, String.Empty, in_LogRunId.Trim())&#xA;safeRunId = System.Text.RegularExpressions.Regex.Replace(safeRunId, &quot;[^A-Za-z0-9_-]&quot;, &quot;_&quot;)&#xA;If String.IsNullOrWhiteSpace(safeRunId) Then&#xA;    safeRunId = DateTime.Now.ToString(&quot;yyyyMMdd_HHmmss_fff&quot;)&#xA;End If&#xA;&#xA;Dim logFilePath As String = System.IO.Path.Combine(logFolder, &quot;advance_step_log_&quot; &amp; safeRunId &amp; &quot;.txt&quot;)&#xA;Dim normalizedStatusError As String = If(in_ErrorMessage, String.Empty)&#xA;Dim isNotAvailable As Boolean = normalizedStatusError.StartsWith(&quot;NOT_AVAILABLE | &quot;, System.StringComparison.Ordinal)&#xA;Dim isNoCandidate As Boolean = normalizedStatusError.StartsWith(&quot;NO_CANDIDATE | &quot;, System.StringComparison.Ordinal)&#xA;Dim isReviewRequired As Boolean = normalizedStatusError.StartsWith(&quot;REVIEW_REQUIRED | &quot;, System.StringComparison.Ordinal)&#xA;Dim resultText As String = If(isNotAvailable, &quot;NOT_AVAILABLE&quot;, If(isNoCandidate, &quot;NO_CANDIDATE&quot;, If(isReviewRequired, &quot;REVIEW_REQUIRED&quot;, If(in_StateSucceeded AndAlso Not in_HasRunError, &quot;SUCCESS&quot;, &quot;FAILED_CONTINUE&quot;))))&#xA;Dim normalizedError As String = If(in_ErrorMessage Is Nothing, String.Empty, in_ErrorMessage).Replace(vbCr, &quot; &quot;).Replace(vbLf, &quot; &quot;)&#xA;Dim normalizedPath As String = If(isNotAvailable OrElse isNoCandidate OrElse isReviewRequired, String.Empty, If(in_DownloadedFilePath Is Nothing, String.Empty, in_DownloadedFilePath).Replace(vbCr, &quot; &quot;).Replace(vbLf, &quot; &quot;))&#xA;&#xA;Dim logLine As String = DateTime.Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.fff&quot;) &amp;&#xA;    &quot; | StepIndex=&quot; &amp; in_StepIndex.ToString() &amp;&#xA;    &quot; | StepId=&quot; &amp; If(in_StepId Is Nothing, String.Empty, in_StepId) &amp;&#xA;    &quot; | Operation=&quot; &amp; If(in_Operation Is Nothing, String.Empty, in_Operation) &amp;&#xA;    &quot; | ActionKey=&quot; &amp; If(in_ActionKey Is Nothing, String.Empty, in_ActionKey) &amp;&#xA;    &quot; | Result=&quot; &amp; resultText &amp;&#xA;    &quot; | DownloadedFile=&quot; &amp; normalizedPath &amp;&#xA;    &quot; | Error=&quot; &amp; normalizedError&#xA;&#xA;System.IO.File.AppendAllText(logFilePath, logLine &amp; Environment.NewLine, New System.Text.UTF8Encoding(False))" DisplayName="Append Advance Step TXT Log" sap2010:WorkflowViewState.IdRef="InvokeCode_AdvanceStepTxtLog_1">
                                             <ui:InvokeCode.Arguments>
                                               <InArgument x:TypeArguments="x:String" x:Key="in_LogRunId">[in_RunId]</InArgument>
                                               <InArgument x:TypeArguments="x:Int32" x:Key="in_StepIndex">[currentStepIndex]</InArgument>

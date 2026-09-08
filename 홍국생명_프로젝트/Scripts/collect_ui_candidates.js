@@ -1153,6 +1153,110 @@ function (element, input) {
         }
     }
 
+    function getProductDownloadMetadata(target) {
+        var metadata = {
+            is_product_download_table: false,
+            product_name: "",
+            sale_period: "",
+            product_code: "",
+            document_type: ""
+        };
+
+        try {
+            var cell = getTableCell(target);
+            var row = findAncestorByTagName(target, "TR");
+            var table = findAncestorByTagName(target, "TABLE");
+
+            if (!cell || !row || !table || !row.cells || !table.rows) {
+                return metadata;
+            }
+
+            var headerByIndex = [];
+            var hasSalePeriod = false;
+            var hasProductCode = false;
+            var hasDocumentColumn = false;
+
+            for (var rowIndex = 0; rowIndex < table.rows.length; rowIndex++) {
+                var headerRow = table.rows[rowIndex];
+                if (headerRow === row) {
+                    break;
+                }
+
+                if (!headerRow.cells) {
+                    continue;
+                }
+
+                for (var cellIndex = 0; cellIndex < headerRow.cells.length; cellIndex++) {
+                    var headerCell = headerRow.cells[cellIndex];
+                    var headerText = normalizeWhitespace(getVisibleText(headerCell));
+                    if (!headerText) {
+                        continue;
+                    }
+
+                    if (!headerByIndex[cellIndex] || String(headerCell.tagName).toUpperCase() === "TH") {
+                        headerByIndex[cellIndex] = headerText;
+                    }
+
+                    hasSalePeriod = hasSalePeriod || headerText.indexOf("판매기간") >= 0;
+                    hasProductCode = hasProductCode || headerText.indexOf("상품코드") >= 0;
+                    hasDocumentColumn = hasDocumentColumn ||
+                        headerText.indexOf("상품약관") >= 0 ||
+                        headerText.indexOf("사업방법서") >= 0 ||
+                        headerText.indexOf("상품요약서") >= 0;
+                }
+            }
+
+            metadata.is_product_download_table =
+                hasSalePeriod && hasProductCode && hasDocumentColumn;
+
+            if (!metadata.is_product_download_table) {
+                return metadata;
+            }
+
+            for (var index = 0; index < row.cells.length; index++) {
+                var value = normalizeWhitespace(getVisibleText(row.cells[index]));
+                var header = normalizeWhitespace(headerByIndex[index] || "");
+
+                if (header.indexOf("판매기간") >= 0) {
+                    metadata.sale_period = truncate(value, MAX_CONTEXT_LENGTH);
+                } else if (header.indexOf("상품코드") >= 0) {
+                    metadata.product_code = truncate(value, MAX_CONTEXT_LENGTH);
+                }
+            }
+
+            var columnIndex = getTableColumnIndex(target);
+            var selectedHeader = normalizeWhitespace(headerByIndex[columnIndex] || getTableColumnHeader(target));
+            if (selectedHeader.indexOf("상품약관") >= 0) {
+                metadata.document_type = "상품약관";
+            } else if (selectedHeader.indexOf("사업방법서") >= 0) {
+                metadata.document_type = "사업방법서";
+            } else if (selectedHeader.indexOf("상품요약서") >= 0) {
+                metadata.document_type = "상품요약서";
+            }
+
+            var searchNode = table;
+            for (var depth = 0; depth < 8 && searchNode; depth++) {
+                var sibling = searchNode.previousElementSibling;
+                while (sibling) {
+                    var productText = normalizeWhitespace(getVisibleText(sibling));
+                    if (productText && productText.indexOf("상품 공시 다운로드") < 0) {
+                        metadata.product_name = truncate(productText, MAX_CONTEXT_LENGTH);
+                        break;
+                    }
+                    sibling = sibling.previousElementSibling;
+                }
+                if (metadata.product_name) {
+                    break;
+                }
+                searchNode = searchNode.parentElement;
+            }
+
+            return metadata;
+        } catch (error) {
+            return metadata;
+        }
+    }
+
     function getNearbyText(target) {
         if (!target) {
             return "";
@@ -1663,6 +1767,9 @@ function (element, input) {
 
             assignedCandidateCount++;
 
+            var productDownloadMetadata =
+                getProductDownloadMetadata(candidateTarget);
+
             var candidateObject = {
                 element_id: elementId,
                 source: "JS",
@@ -1787,6 +1894,21 @@ function (element, input) {
                     getTableContext(
                         candidateTarget
                     ),
+
+                is_product_download_table:
+                    productDownloadMetadata.is_product_download_table,
+
+                product_name:
+                    productDownloadMetadata.product_name,
+
+                sale_period:
+                    productDownloadMetadata.sale_period,
+
+                product_code:
+                    productDownloadMetadata.product_code,
+
+                document_type:
+                    productDownloadMetadata.document_type,
 
                 frame_path:
                     candidateEntry.framePath,
