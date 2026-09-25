@@ -1,0 +1,6 @@
+{
+  "Name": "메리츠 POC",
+  "ProjectType": "Process",
+  "Description": "빈 프로세스",
+  "MainFile": "Main.xaml"
+}

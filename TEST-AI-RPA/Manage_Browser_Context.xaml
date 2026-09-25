@@ -1,0 +1,298 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Manage_Browser_Context" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing.Common" xmlns:sd1="clr-namespace:System.Drawing;assembly=System.Drawing.Primitives" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Operation" Type="InArgument(x:String)" />
+    <x:Property Name="in_WaitSeconds" Type="InArgument(x:Int32)" />
+    <x:Property Name="io_CurrentBrowser" Type="InOutArgument(ui:UiElement)" />
+    <x:Property Name="io_BrowserStack" Type="InOutArgument(scg:List(ui:UiElement))" />
+    <x:Property Name="out_Success" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="out_ErrorMessage" Type="OutArgument(x:String)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Manage Browser Context" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="ui:UiElement" Name="activeWindow" />
+      <Variable x:TypeArguments="ui:UiElement" Name="popupWindow" />
+      <Variable x:TypeArguments="x:String" Name="popupTitle" />
+      <Variable x:TypeArguments="x:String" Name="popupSelector" />
+      <Variable x:TypeArguments="ui:UiElement" Name="parentWindow" />
+      <Variable x:TypeArguments="x:Int32" Name="waitSeconds" />
+      <Variable x:TypeArguments="x:Boolean" Name="attachSucceeded" />
+      <Variable x:TypeArguments="x:String" Name="attachErrorMessage" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:MultipleAssign DisplayName="Initialize Browser Context Result" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:Boolean">[out_Success]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:Int32">[waitSeconds]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:Int32">[Math.Max(1, in_WaitSeconds)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <TryCatch DisplayName="Manage Browser Context Try Catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <Switch x:TypeArguments="x:String" DisplayName="Switch Browser Context Operation" Expression="[If(String.IsNullOrWhiteSpace(in_Operation), String.Empty, in_Operation.Trim().ToUpperInvariant())]" sap2010:WorkflowViewState.IdRef="Switch_1">
+          <Switch.Default>
+            <Throw Exception="[New System.Exception(&quot;지원하지 않는 브라우저 컨텍스트 operation입니다: &quot; &amp; in_Operation)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
+          </Switch.Default>
+          <Sequence x:Key="ATTACH_WINDOW" DisplayName="Attach Active Window" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Delay DisplayName="Wait For Popup" Duration="[TimeSpan.FromSeconds(waitSeconds)]" sap2010:WorkflowViewState.IdRef="Delay_1" />
+            <ui:GetActiveWindow ApplicationWindow="[popupWindow]" DisplayName="Get Active Popup Window" sap2010:WorkflowViewState.IdRef="GetActiveWindow_1">
+              <ui:GetActiveWindow.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="PopupWindowContext" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Popup Window Captured" sap2010:WorkflowViewState.IdRef="Sequence_8" />
+                </ActivityAction>
+              </ui:GetActiveWindow.Body>
+            </ui:GetActiveWindow>
+            <If Condition="[popupWindow Is Nothing]" DisplayName="Validate Popup Window" sap2010:WorkflowViewState.IdRef="If_6">
+              <If.Then>
+                <Throw Exception="[New System.Exception(&quot;활성 팝업 창을 찾지 못했습니다.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_5" />
+              </If.Then>
+            </If>
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="popupTitle = String.Empty&#xA;popupSelector = String.Empty&#xA;&#xA;If popupWindow Is Nothing Then&#xA;    Throw New System.Exception(&quot;팝업 창 요소가 비어 있습니다.&quot;)&#xA;End If&#xA;&#xA;For Each attributeName As String In New String() {&quot;title&quot;, &quot;aaname&quot;, &quot;text&quot;}&#xA;    Try&#xA;        Dim attributeValue As String = Convert.ToString(popupWindow.Get(attributeName)).Trim()&#xA;        If Not String.IsNullOrWhiteSpace(attributeValue) Then&#xA;            popupTitle = attributeValue&#xA;            Exit For&#xA;        End If&#xA;    Catch&#xA;    End Try&#xA;Next&#xA;&#xA;popupTitle = System.Text.RegularExpressions.Regex.Replace(&#xA;    popupTitle,&#xA;    &quot;\s+-\s+(Google\s+)?Chrome\s*$&quot;,&#xA;    String.Empty,&#xA;    System.Text.RegularExpressions.RegexOptions.IgnoreCase&#xA;).Trim()&#xA;&#xA;If String.IsNullOrWhiteSpace(popupTitle) Then&#xA;    Throw New System.Exception(&quot;활성 팝업 창의 문서 제목을 읽지 못했습니다.&quot;)&#xA;End If&#xA;&#xA;Dim escapedTitle As String = popupTitle.Replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;).Replace(&quot;'&quot;, &quot;&amp;apos;&quot;).Replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;).Replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;)&#xA;popupSelector = &quot;&lt;html app='chrome.exe' title='&quot; &amp; escapedTitle &amp; &quot;' /&gt;&quot;" DisplayName="Build Active Popup HTML Selector" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="ui:UiElement" x:Key="popupWindow">[popupWindow]</InArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="popupTitle">[popupTitle]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="popupSelector">[popupSelector]</OutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <WriteLine DisplayName="Trace Popup Attach Selector" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;[추적] ATTACH_WINDOW | 팝업제목=&quot; &amp; popupTitle &amp; &quot; | HTML선택자=&quot; &amp; popupSelector]" />
+            <uix:NApplicationCard AttachMode="ByInstance" CloseMode="[UiPath.UIAutomationNext.Enums.NAppCloseMode.Never]" DisplayName="Attach Browser Document Inside Active Popup" HealingAgentBehavior="Job" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" OpenMode="[UiPath.UIAutomationNext.Enums.NAppOpenMode.Never]" OutUiElement="[activeWindow]" ScopeGuid="6fe7c3ef-3542-4828-96bb-99cf15fb43bc" Version="V2">
+              <uix:NApplicationCard.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="PopupSessionData" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Popup Browser Attached" sap2010:WorkflowViewState.IdRef="Sequence_7" />
+                </ActivityAction>
+              </uix:NApplicationCard.Body>
+              <uix:NApplicationCard.OCREngine>
+                <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
+                  <ActivityFunc.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+                  </ActivityFunc.Argument>
+                </ActivityFunc>
+              </uix:NApplicationCard.OCREngine>
+              <uix:NApplicationCard.TargetApp>
+                <uix:TargetApp Area="0, 0, 0, 0" BrowserType="Chrome" Selector="[popupSelector]" Version="V3" />
+              </uix:NApplicationCard.TargetApp>
+            </uix:NApplicationCard>
+            <Assign DisplayName="Set Attach Result" sap2010:WorkflowViewState.IdRef="Assign_9">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Boolean">[attachSucceeded]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Boolean">[activeWindow IsNot Nothing]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If Condition="[Not attachSucceeded OrElse activeWindow Is Nothing]" DisplayName="Validate Active Popup" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Throw Exception="[New System.Exception(&quot;새 브라우저 창의 웹 문서를 활성 작업 대상으로 확보하지 못했습니다. &quot; &amp; attachErrorMessage)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
+              </If.Then>
+            </If>
+            <If Condition="[io_BrowserStack Is Nothing]" DisplayName="Initialize Browser Stack" sap2010:WorkflowViewState.IdRef="If_2">
+              <If.Then>
+                <Assign DisplayName="Create Browser Stack" sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="scg:List(ui:UiElement)">[io_BrowserStack]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="scg:List(ui:UiElement)">[New List(Of UiPath.Core.UiElement)()]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Then>
+            </If>
+            <If Condition="[io_CurrentBrowser IsNot Nothing]" DisplayName="Push Parent Browser" sap2010:WorkflowViewState.IdRef="If_3">
+              <If.Then>
+                <Assign DisplayName="Append Parent Browser To Stack" sap2010:WorkflowViewState.IdRef="Assign_2">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="scg:List(ui:UiElement)">[io_BrowserStack]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="scg:List(ui:UiElement)">[io_BrowserStack.Concat(New UiPath.Core.UiElement() {io_CurrentBrowser}).ToList()]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Then>
+            </If>
+            <Assign DisplayName="Use Popup As Current Browser" sap2010:WorkflowViewState.IdRef="Assign_3">
+              <Assign.To>
+                <OutArgument x:TypeArguments="ui:UiElement">[io_CurrentBrowser]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="ui:UiElement">[activeWindow]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Attach Success" sap2010:WorkflowViewState.IdRef="Assign_4">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Boolean">[out_Success]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+          <Sequence x:Key="CLOSE_AND_RETURN" DisplayName="Close Popup And Return" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <If Condition="[io_CurrentBrowser Is Nothing]" DisplayName="Validate Current Popup" sap2010:WorkflowViewState.IdRef="If_4">
+              <If.Then>
+                <Throw Exception="[New System.Exception(&quot;닫을 현재 브라우저 창이 없습니다.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
+              </If.Then>
+            </If>
+            <If Condition="[io_BrowserStack Is Nothing OrElse io_BrowserStack.Count = 0]" DisplayName="Validate Parent Browser" sap2010:WorkflowViewState.IdRef="If_5">
+              <If.Then>
+                <Throw Exception="[New System.Exception(&quot;복귀할 부모 브라우저 창이 없습니다.&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_4" />
+              </If.Then>
+            </If>
+            <Assign DisplayName="Read Parent Browser" sap2010:WorkflowViewState.IdRef="Assign_5">
+              <Assign.To>
+                <OutArgument x:TypeArguments="ui:UiElement">[parentWindow]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="ui:UiElement">[io_BrowserStack(io_BrowserStack.Count - 1)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <TryCatch DisplayName="Close Popup If It Still Exists" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+              <TryCatch.Try>
+                <ui:CloseWindow Selector="{x:Null}" TimeoutMS="3000" UseWindow="[io_CurrentBrowser]" DisplayName="Close Attached Popup Window" sap2010:WorkflowViewState.IdRef="CloseWindow_1" WaitForReady="NONE" />
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="closeException" />
+                    </ActivityAction.Argument>
+                    <WriteLine DisplayName="Trace Popup Already Closed" Text="[&quot;[추적] CLOSE_AND_RETURN | 팝업이 이미 닫혔거나 닫기 불필요: &quot; &amp; closeException.GetBaseException().Message]" sap2010:WorkflowViewState.IdRef="WriteLine_2" />
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+            </TryCatch>
+            <Delay DisplayName="Wait For Parent Window" Duration="00:00:01" sap2010:WorkflowViewState.IdRef="Delay_2" />
+            <Assign DisplayName="Pop Browser Stack" sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign.To>
+                <OutArgument x:TypeArguments="scg:List(ui:UiElement)">[io_BrowserStack]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="scg:List(ui:UiElement)">[io_BrowserStack.Take(io_BrowserStack.Count - 1).ToList()]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Restore Parent Browser" sap2010:WorkflowViewState.IdRef="Assign_7">
+              <Assign.To>
+                <OutArgument x:TypeArguments="ui:UiElement">[io_CurrentBrowser]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="ui:UiElement">[parentWindow]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Return Success" sap2010:WorkflowViewState.IdRef="Assign_8">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Boolean">[out_Success]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </Switch>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Browser Context Error" sap2010:WorkflowViewState.IdRef="Sequence_5">
+              <ui:MultipleAssign DisplayName="Return Browser Context Error" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+                <ui:MultipleAssign.AssignOperations>
+                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="2">
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[out_Success]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">[exception.GetBaseException().Message]</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                  </scg:List>
+                </ui:MultipleAssign.AssignOperations>
+              </ui:MultipleAssign>
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>
+

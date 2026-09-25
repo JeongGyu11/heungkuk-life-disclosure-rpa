@@ -1,0 +1,443 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Handle_Save_As_Dialog" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_ErrorMessage" Type="OutArgument(x:String)" />
+    <x:Property Name="out_SavedFilePath" Type="OutArgument(x:String)" />
+    <x:Property Name="out_SaveSuccess" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="in_TimeoutSeconds" Type="InArgument(x:Int32)" />
+    <x:Property Name="in_ExpectedFileName" Type="InArgument(x:String)" />
+    <x:Property Name="in_DownloadFolder" Type="InArgument(x:String)" />
+    <x:Property Name="in_SaveAsDialogWindow" Type="InArgument(ui:Window)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Handle_Save_As_Dialog_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>NPOI.SS.Formula.Functions</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>UiPath.Platform.SyncObjects</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>GlobalVariablesT1PNoYwrqg</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>NPOI.Core</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Handle_Save_As_Dialog" sap:VirtualizedContainerService.HintSize="1859,3935" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Int32" Name="stablePollCount" />
+      <Variable x:TypeArguments="x:Int64" Default="[-1]" Name="previousFileSize" />
+      <Variable x:TypeArguments="x:Boolean" Name="fileCreated" />
+      <Variable x:TypeArguments="x:Boolean" Name="saveClickSucceeded" />
+      <Variable x:TypeArguments="ui:UiElement" Name="saveButtonElement" />
+      <Variable x:TypeArguments="ui:UiElement" Name="fileNameEditElement" />
+      <Variable x:TypeArguments="ui:UiElement" Name="saveDialogUiElement" />
+      <Variable x:TypeArguments="x:Int32" Default="60" Name="effectiveTimeoutSeconds" />
+      <Variable x:TypeArguments="x:String" Name="targetSavePath" />
+      <Variable x:TypeArguments="x:String" Name="effectiveFileName" />
+      <Variable x:TypeArguments="x:String" Name="normalizedFolder" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="Handle Save As Dialog" sap:VirtualizedContainerService.HintSize="650,3912" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="dialogChildren" />
+        <Variable x:TypeArguments="x:String" Name="currentSuggestedFileName" />
+        <Variable x:TypeArguments="x:String" Name="elementResolveError" />
+        <Variable x:TypeArguments="x:Boolean" Name="typeSucceeded" />
+        <Variable x:TypeArguments="x:String" Name="typeErrorMessage" />
+        <Variable x:TypeArguments="x:String" Name="saveClickErrorMessage" />
+        <Variable x:TypeArguments="x:String" Name="waitErrorMessage" />
+        <Variable x:TypeArguments="scg:Dictionary(x:String, s:DateTime)" Name="filesBeforeSave" />
+        <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int64)" Name="fileSizesBeforeSave" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:MultipleAssign DisplayName="Save As 처리 상태 초기화" sap:VirtualizedContainerService.HintSize="616,521" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+        <ui:MultipleAssign.AssignOperations>
+          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="16">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[out_SaveSuccess]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[out_SavedFilePath]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[normalizedFolder]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[effectiveFileName]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[targetSavePath]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="ui:UiElement">[fileNameEditElement]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="ui:UiElement">[Nothing]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="ui:UiElement">[saveButtonElement]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="ui:UiElement">[Nothing]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[typeSucceeded]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[saveClickSucceeded]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[fileCreated]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_12">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Int64">[previousFileSize]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Int64">-1</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Int32">[stablePollCount]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Int32">0</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+          </scg:List>
+        </ui:MultipleAssign.AssignOperations>
+      </ui:MultipleAssign>
+      <TryCatch DisplayName="Handle Save As Dialog Try Catch" sap:VirtualizedContainerService.HintSize="616,3308" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+        <TryCatch.Try>
+          <Sequence DisplayName="Save As Dialog 처리" sap:VirtualizedContainerService.HintSize="614,2880" sap2010:WorkflowViewState.IdRef="Sequence_6">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[in_SaveAsDialogWindow Is Nothing]" DisplayName="저장 창 인수 검증" sap:VirtualizedContainerService.HintSize="580,342" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Throw DisplayName="Throw Save As Window Missing" Exception="[New System.Exception(&quot;다른 이름으로 저장 창 요소가 전달되지 않았습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_1" />
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <If Condition="[String.IsNullOrWhiteSpace(in_DownloadFolder)]" DisplayName="저장 폴더 인수 검증" sap:VirtualizedContainerService.HintSize="580,342" sap2010:WorkflowViewState.IdRef="If_2">
+              <If.Then>
+                <Throw DisplayName="Throw Save Folder Missing" Exception="[New System.Exception(&quot;저장 폴더가 지정되지 않았습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_2" />
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim folderPath As String = System.IO.Path.GetFullPath(in_Folder.Trim())&#xA;&#xA;If Not System.IO.Directory.Exists(folderPath) Then&#xA;    System.IO.Directory.CreateDirectory(folderPath)&#xA;End If&#xA;&#xA;Dim snapshotTimes As New System.Collections.Generic.Dictionary(Of String, System.DateTime)(System.StringComparer.OrdinalIgnoreCase)&#xA;Dim snapshotSizes As New System.Collections.Generic.Dictionary(Of String, Long)(System.StringComparer.OrdinalIgnoreCase)&#xA;&#xA;For Each filePath As String In System.IO.Directory.GetFiles(folderPath, &quot;*&quot;, System.IO.SearchOption.TopDirectoryOnly)&#xA;    Try&#xA;        Dim fileInfo As New System.IO.FileInfo(filePath)&#xA;        snapshotTimes(fileInfo.FullName) = fileInfo.LastWriteTimeUtc&#xA;        snapshotSizes(fileInfo.FullName) = fileInfo.Length&#xA;    Catch&#xA;    End Try&#xA;Next&#xA;&#xA;out_NormalizedFolder = folderPath&#xA;out_EffectiveTimeoutSeconds = If(in_TimeoutSeconds &lt;= 0, 60, in_TimeoutSeconds)&#xA;out_FilesBefore = snapshotTimes&#xA;out_FileSizesBefore = snapshotSizes" DisplayName="Prepare Save Folder Snapshot" sap:VirtualizedContainerService.HintSize="580,197" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[in_DownloadFolder]</InArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_TimeoutSeconds">[in_TimeoutSeconds]</InArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_NormalizedFolder">[normalizedFolder]</OutArgument>
+                <OutArgument x:TypeArguments="x:Int32" x:Key="out_EffectiveTimeoutSeconds">[effectiveTimeoutSeconds]</OutArgument>
+                <OutArgument x:TypeArguments="scg:Dictionary(x:String, s:DateTime)" x:Key="out_FilesBefore">[filesBeforeSave]</OutArgument>
+                <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Int64)" x:Key="out_FileSizesBefore">[fileSizesBeforeSave]</OutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <Delay DisplayName="저장 창 컨트롤 표시 대기" Duration="00:00:00.5000000" sap:VirtualizedContainerService.HintSize="580,123" sap2010:WorkflowViewState.IdRef="Delay_1" />
+            <ui:FindChildren Children="[dialogChildren]" DisplayName="Find Save Dialog Children" Filter="&lt;ctrl /&gt;" sap:VirtualizedContainerService.HintSize="580,217" sap2010:WorkflowViewState.IdRef="FindChildren_1" Scope="FIND_DESCENDANTS">
+              <ui:FindChildren.Target>
+                <ui:Target ClippingRegion="{x:Null}" Selector="{x:Null}" Element="[in_SaveAsDialogWindow]" Id="9d4bc125-9ff5-4d32-9982-2c20530f4fad" TimeoutMS="5000">
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:FindChildren.Target>
+            </ui:FindChildren>
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_FileNameEditElement = Nothing&#xA;out_SaveButtonElement = Nothing&#xA;out_CurrentSuggestedFileName = String.Empty&#xA;out_ErrorMessage = String.Empty&#xA;&#xA;If in_Children Is Nothing Then&#xA;    out_ErrorMessage = &quot;저장 창의 하위 UI 요소를 수집하지 못했습니다.&quot;&#xA;    Return&#xA;End If&#xA;&#xA;Dim bestEditScore As Integer = -1&#xA;Dim bestButtonScore As Integer = -1&#xA;&#xA;For Each currentElement As UiPath.Core.UiElement In in_Children&#xA;    If currentElement Is Nothing Then&#xA;        Continue For&#xA;    End If&#xA;&#xA;    Try&#xA;        Dim roleObject As Object = Nothing&#xA;        Dim controlTypeObject As Object = Nothing&#xA;        Dim nameObject As Object = Nothing&#xA;        Dim aaNameObject As Object = Nothing&#xA;        Dim automationIdObject As Object = Nothing&#xA;        Dim classObject As Object = Nothing&#xA;&#xA;        Try&#xA;            roleObject = currentElement.Get(&quot;role&quot;)&#xA;        Catch&#xA;        End Try&#xA;&#xA;        Try&#xA;            controlTypeObject = currentElement.Get(&quot;controltype&quot;)&#xA;        Catch&#xA;        End Try&#xA;&#xA;        Try&#xA;            nameObject = currentElement.Get(&quot;name&quot;)&#xA;        Catch&#xA;        End Try&#xA;&#xA;        Try&#xA;            aaNameObject = currentElement.Get(&quot;aaname&quot;)&#xA;        Catch&#xA;        End Try&#xA;&#xA;        Try&#xA;            automationIdObject = currentElement.Get(&quot;automationid&quot;)&#xA;        Catch&#xA;        End Try&#xA;&#xA;        Try&#xA;            classObject = currentElement.Get(&quot;cls&quot;)&#xA;        Catch&#xA;        End Try&#xA;&#xA;        Dim roleText As String = If(roleObject Is Nothing, String.Empty, System.Convert.ToString(roleObject)).Trim().ToLowerInvariant()&#xA;        Dim controlTypeText As String = If(controlTypeObject Is Nothing, String.Empty, System.Convert.ToString(controlTypeObject)).Trim().ToLowerInvariant()&#xA;        Dim nameText As String = If(nameObject Is Nothing, String.Empty, System.Convert.ToString(nameObject)).Trim()&#xA;        Dim aaNameText As String = If(aaNameObject Is Nothing, String.Empty, System.Convert.ToString(aaNameObject)).Trim()&#xA;        Dim automationIdText As String = If(automationIdObject Is Nothing, String.Empty, System.Convert.ToString(automationIdObject)).Trim()&#xA;        Dim classText As String = If(classObject Is Nothing, String.Empty, System.Convert.ToString(classObject)).Trim().ToLowerInvariant()&#xA;&#xA;        Dim displayName As String = If(String.IsNullOrWhiteSpace(nameText), aaNameText, nameText)&#xA;        Dim normalizedDisplayName As String = displayName.ToLowerInvariant()&#xA;&#xA;        Dim editScore As Integer = 0&#xA;&#xA;        If roleText.Contains(&quot;editable&quot;) OrElse roleText = &quot;text&quot; Then&#xA;            editScore += 30&#xA;        End If&#xA;&#xA;        If controlTypeText.Contains(&quot;edit&quot;) Then&#xA;            editScore += 30&#xA;        End If&#xA;&#xA;        If classText = &quot;edit&quot; OrElse classText.Contains(&quot;edit&quot;) Then&#xA;            editScore += 20&#xA;        End If&#xA;&#xA;        If automationIdText = &quot;1001&quot; Then&#xA;            editScore += 100&#xA;        End If&#xA;&#xA;        If normalizedDisplayName.Contains(&quot;파일 이름&quot;) OrElse&#xA;           normalizedDisplayName.Contains(&quot;file name&quot;) OrElse&#xA;           normalizedDisplayName.Contains(&quot;filename&quot;) Then&#xA;&#xA;            editScore += 80&#xA;        End If&#xA;&#xA;        If editScore &gt; bestEditScore AndAlso editScore &gt;= 30 Then&#xA;            bestEditScore = editScore&#xA;            out_FileNameEditElement = currentElement&#xA;&#xA;            Dim suggestedObject As Object = Nothing&#xA;&#xA;            Try&#xA;                suggestedObject = currentElement.Get(&quot;text&quot;)&#xA;            Catch&#xA;            End Try&#xA;&#xA;            If suggestedObject Is Nothing OrElse String.IsNullOrWhiteSpace(System.Convert.ToString(suggestedObject)) Then&#xA;                Try&#xA;                    suggestedObject = currentElement.Get(&quot;value&quot;)&#xA;                Catch&#xA;                End Try&#xA;            End If&#xA;&#xA;            If suggestedObject Is Nothing OrElse String.IsNullOrWhiteSpace(System.Convert.ToString(suggestedObject)) Then&#xA;                Try&#xA;                    suggestedObject = currentElement.Get(&quot;name&quot;)&#xA;                Catch&#xA;                End Try&#xA;            End If&#xA;&#xA;            out_CurrentSuggestedFileName = If(suggestedObject Is Nothing, String.Empty, System.Convert.ToString(suggestedObject)).Trim()&#xA;        End If&#xA;&#xA;        Dim buttonScore As Integer = 0&#xA;&#xA;        If roleText.Contains(&quot;button&quot;) OrElse roleText.Contains(&quot;push&quot;) Then&#xA;            buttonScore += 30&#xA;        End If&#xA;&#xA;        If controlTypeText.Contains(&quot;button&quot;) Then&#xA;            buttonScore += 30&#xA;        End If&#xA;&#xA;        If automationIdText = &quot;1&quot; Then&#xA;            buttonScore += 100&#xA;        End If&#xA;&#xA;        If normalizedDisplayName = &quot;저장&quot; OrElse&#xA;           normalizedDisplayName.StartsWith(&quot;저장(&quot;) OrElse&#xA;           normalizedDisplayName.Contains(&quot;&amp;저장&quot;) OrElse&#xA;           normalizedDisplayName = &quot;save&quot; OrElse&#xA;           normalizedDisplayName.StartsWith(&quot;save (&quot;) OrElse&#xA;           normalizedDisplayName.StartsWith(&quot;&amp;save&quot;) Then&#xA;&#xA;            buttonScore += 100&#xA;        ElseIf normalizedDisplayName.Contains(&quot;저장&quot;) OrElse&#xA;               normalizedDisplayName.Contains(&quot;save&quot;) Then&#xA;&#xA;            buttonScore += 50&#xA;        End If&#xA;&#xA;        If buttonScore &gt; bestButtonScore AndAlso buttonScore &gt;= 30 Then&#xA;            bestButtonScore = buttonScore&#xA;            out_SaveButtonElement = currentElement&#xA;        End If&#xA;&#xA;    Catch&#xA;    End Try&#xA;Next&#xA;&#xA;If out_FileNameEditElement Is Nothing Then&#xA;    out_ErrorMessage = &quot;다른 이름으로 저장 창에서 파일 이름 입력란을 찾지 못했습니다.&quot;&#xA;ElseIf out_SaveButtonElement Is Nothing Then&#xA;    out_ErrorMessage = &quot;다른 이름으로 저장 창에서 저장 버튼을 찾지 못했습니다.&quot;&#xA;End If" DisplayName="Resolve Save Dialog Controls" sap:VirtualizedContainerService.HintSize="580,197" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="scg:IEnumerable(ui:UiElement)" x:Key="in_Children">[dialogChildren]</InArgument>
+                <OutArgument x:TypeArguments="ui:UiElement" x:Key="out_FileNameEditElement">[fileNameEditElement]</OutArgument>
+                <OutArgument x:TypeArguments="ui:UiElement" x:Key="out_SaveButtonElement">[saveButtonElement]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_CurrentSuggestedFileName">[currentSuggestedFileName]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_ErrorMessage">[elementResolveError]</OutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <If Condition="[fileNameEditElement Is Nothing OrElse saveButtonElement Is Nothing]" DisplayName="저장 창 컨트롤 검증" sap:VirtualizedContainerService.HintSize="580,57" sap2010:WorkflowViewState.IdRef="If_3">
+              <If.Then>
+                <Throw DisplayName="Throw Save Dialog Control Missing" Exception="[New System.Exception(If(String.IsNullOrWhiteSpace(elementResolveError), &quot;다른 이름으로 저장 창의 필수 컨트롤을 찾지 못했습니다.&quot;, elementResolveError))]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_3" />
+              </If.Then>
+            </If>
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim rawFileName As String = If(in_ExpectedFileName Is Nothing, String.Empty, in_ExpectedFileName.Trim())&#xA;&#xA;If String.IsNullOrWhiteSpace(rawFileName) Then&#xA;    rawFileName = If(in_SuggestedFileName Is Nothing, String.Empty, in_SuggestedFileName.Trim())&#xA;End If&#xA;&#xA;rawFileName = rawFileName.Trim().Trim(&quot;&quot;&quot;&quot;c)&#xA;&#xA;If String.IsNullOrWhiteSpace(rawFileName) Then&#xA;    Throw New System.Exception(&quot;저장할 파일명을 확인하지 못했습니다.&quot;)&#xA;End If&#xA;&#xA;Dim fileNameOnly As String = System.IO.Path.GetFileName(rawFileName)&#xA;&#xA;If String.IsNullOrWhiteSpace(fileNameOnly) Then&#xA;    Throw New System.Exception(&quot;저장할 파일명이 올바르지 않습니다: &quot; &amp; rawFileName)&#xA;End If&#xA;&#xA;If fileNameOnly.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) &gt;= 0 Then&#xA;    Throw New System.Exception(&quot;저장할 파일명에 사용할 수 없는 문자가 포함되어 있습니다: &quot; &amp; fileNameOnly)&#xA;End If&#xA;&#xA;Dim candidatePath As String = System.IO.Path.Combine(in_Folder, fileNameOnly)&#xA;&#xA;If System.IO.File.Exists(candidatePath) Then&#xA;    Dim baseName As String = System.IO.Path.GetFileNameWithoutExtension(fileNameOnly)&#xA;    Dim extension As String = System.IO.Path.GetExtension(fileNameOnly)&#xA;    Dim duplicateIndex As Integer = 1&#xA;&#xA;    Do&#xA;        Dim duplicateName As String = baseName &amp; &quot; (&quot; &amp; duplicateIndex.ToString() &amp; &quot;)&quot; &amp; extension&#xA;        candidatePath = System.IO.Path.Combine(in_Folder, duplicateName)&#xA;        duplicateIndex += 1&#xA;    Loop While System.IO.File.Exists(candidatePath)&#xA;End If&#xA;&#xA;out_EffectiveFileName = System.IO.Path.GetFileName(candidatePath)&#xA;out_TargetSavePath = candidatePath" DisplayName="Build Target Save Path" sap:VirtualizedContainerService.HintSize="580,197" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[normalizedFolder]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedFileName">[in_ExpectedFileName]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SuggestedFileName">[currentSuggestedFileName]</InArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_EffectiveFileName">[effectiveFileName]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_TargetSavePath">[targetSavePath]</OutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <WriteLine DisplayName="Write Save As Target" sap:VirtualizedContainerService.HintSize="580,123" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;=== Save As Target ===&quot; &amp; Environment.NewLine &amp; &quot;SuggestedFileName : &quot; &amp; If(currentSuggestedFileName Is Nothing, String.Empty, currentSuggestedFileName) &amp; Environment.NewLine &amp; &quot;EffectiveFileName : &quot; &amp; effectiveFileName &amp; Environment.NewLine &amp; &quot;TargetSavePath : &quot; &amp; targetSavePath]" />
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Type Save As File Path" sap:VirtualizedContainerService.HintSize="580,177" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Execute_UI_Action.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Operation">["TYPE_INTO"]</InArgument>
+                <InArgument x:TypeArguments="ui:UiElement" x:Key="in_SelectedUiElement">[fileNameEditElement]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_InputText">[targetSavePath]</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_ActionSuccess">[typeSucceeded]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_ErrorMessage">[typeErrorMessage]</OutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <If Condition="[Not typeSucceeded]" DisplayName="저장 경로 입력 결과 검증" sap:VirtualizedContainerService.HintSize="580,57" sap2010:WorkflowViewState.IdRef="If_4">
+              <If.Then>
+                <Throw DisplayName="Throw Save Path Type Failed" Exception="[New System.Exception(If(String.IsNullOrWhiteSpace(typeErrorMessage), &quot;다른 이름으로 저장 창의 파일 이름 입력란에 저장 경로를 입력하지 못했습니다.&quot;, typeErrorMessage))]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_4" />
+              </If.Then>
+            </If>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Click Save Button" sap:VirtualizedContainerService.HintSize="580,177" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Execute_UI_Action.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Operation">["CLICK"]</InArgument>
+                <InArgument x:TypeArguments="ui:UiElement" x:Key="in_SelectedUiElement">[saveButtonElement]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_InputText">[String.Empty]</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_ActionSuccess">[saveClickSucceeded]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_ErrorMessage">[saveClickErrorMessage]</OutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <If Condition="[Not saveClickSucceeded]" DisplayName="저장 버튼 클릭 결과 검증" sap:VirtualizedContainerService.HintSize="580,57" sap2010:WorkflowViewState.IdRef="If_5">
+              <If.Then>
+                <Throw DisplayName="Throw Save Button Click Failed" Exception="[New System.Exception(If(String.IsNullOrWhiteSpace(saveClickErrorMessage), &quot;다른 이름으로 저장 창의 저장 버튼 클릭에 실패했습니다.&quot;, saveClickErrorMessage))]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_5" />
+              </If.Then>
+            </If>
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_FileCreated = False&#xA;out_SavedFilePath = String.Empty&#xA;out_PreviousFileSize = -1L&#xA;out_StablePollCount = 0&#xA;out_ErrorMessage = String.Empty&#xA;&#xA;Dim timeoutSeconds As Integer = If(in_TimeoutSeconds &lt;= 0, 60, in_TimeoutSeconds)&#xA;Dim timer As System.Diagnostics.Stopwatch = System.Diagnostics.Stopwatch.StartNew()&#xA;&#xA;Dim previousCandidatePath As String = String.Empty&#xA;Dim previousCandidateSize As Long = -1L&#xA;Dim stableCount As Integer = 0&#xA;&#xA;Do While timer.Elapsed.TotalSeconds &lt; timeoutSeconds&#xA;    Dim candidatePath As String = String.Empty&#xA;    Dim candidateWriteTime As DateTime = DateTime.MinValue&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(in_TargetSavePath) AndAlso System.IO.File.Exists(in_TargetSavePath) Then&#xA;        candidatePath = in_TargetSavePath&#xA;    Else&#xA;        For Each currentFilePath As String In System.IO.Directory.GetFiles(in_Folder, &quot;*&quot;, System.IO.SearchOption.TopDirectoryOnly)&#xA;            Try&#xA;                Dim currentInfo As New System.IO.FileInfo(currentFilePath)&#xA;                Dim extension As String = currentInfo.Extension.ToLowerInvariant()&#xA;&#xA;                Dim isTemporary As Boolean =&#xA;                    extension = &quot;.crdownload&quot; OrElse&#xA;                    extension = &quot;.part&quot; OrElse&#xA;                    extension = &quot;.partial&quot; OrElse&#xA;                    extension = &quot;.download&quot; OrElse&#xA;                    extension = &quot;.tmp&quot;&#xA;&#xA;                If isTemporary Then&#xA;                    Continue For&#xA;                End If&#xA;&#xA;                Dim existedBefore As Boolean =&#xA;                    in_FilesBefore IsNot Nothing AndAlso&#xA;                    in_FilesBefore.ContainsKey(currentInfo.FullName)&#xA;&#xA;                Dim oldWriteTime As DateTime = If(existedBefore, in_FilesBefore(currentInfo.FullName), DateTime.MinValue)&#xA;                Dim oldSize As Long = -1L&#xA;&#xA;                If in_FileSizesBefore IsNot Nothing AndAlso in_FileSizesBefore.ContainsKey(currentInfo.FullName) Then&#xA;                    oldSize = in_FileSizesBefore(currentInfo.FullName)&#xA;                End If&#xA;&#xA;                Dim isNewOrChanged As Boolean =&#xA;                    Not existedBefore OrElse&#xA;                    currentInfo.LastWriteTimeUtc &gt; oldWriteTime OrElse&#xA;                    currentInfo.Length &lt;&gt; oldSize&#xA;&#xA;                If Not isNewOrChanged Then&#xA;                    Continue For&#xA;                End If&#xA;&#xA;                If currentInfo.LastWriteTimeUtc &gt;= candidateWriteTime Then&#xA;                    candidatePath = currentInfo.FullName&#xA;                    candidateWriteTime = currentInfo.LastWriteTimeUtc&#xA;                End If&#xA;&#xA;            Catch&#xA;            End Try&#xA;        Next&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(candidatePath) AndAlso System.IO.File.Exists(candidatePath) Then&#xA;        Try&#xA;            Dim candidateInfo As New System.IO.FileInfo(candidatePath)&#xA;            Dim currentSize As Long = candidateInfo.Length&#xA;&#xA;            If String.Equals(previousCandidatePath, candidateInfo.FullName, StringComparison.OrdinalIgnoreCase) AndAlso previousCandidateSize = currentSize Then&#xA;                stableCount += 1&#xA;            Else&#xA;                previousCandidatePath = candidateInfo.FullName&#xA;                previousCandidateSize = currentSize&#xA;                stableCount = 1&#xA;            End If&#xA;&#xA;            Dim canOpenExclusively As Boolean = False&#xA;&#xA;            Try&#xA;                Using fileStream As New System.IO.FileStream(candidateInfo.FullName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None)&#xA;                    canOpenExclusively = True&#xA;                End Using&#xA;            Catch&#xA;                canOpenExclusively = False&#xA;            End Try&#xA;&#xA;            If stableCount &gt;= 3 AndAlso canOpenExclusively Then&#xA;                out_FileCreated = True&#xA;                out_SavedFilePath = candidateInfo.FullName&#xA;                out_PreviousFileSize = currentSize&#xA;                out_StablePollCount = stableCount&#xA;                Exit Do&#xA;            End If&#xA;&#xA;        Catch&#xA;        End Try&#xA;    Else&#xA;        previousCandidatePath = String.Empty&#xA;        previousCandidateSize = -1L&#xA;        stableCount = 0&#xA;    End If&#xA;&#xA;    System.Threading.Thread.Sleep(500)&#xA;Loop&#xA;&#xA;timer.Stop()&#xA;&#xA;If Not out_FileCreated Then&#xA;    out_PreviousFileSize = previousCandidateSize&#xA;    out_StablePollCount = stableCount&#xA;    out_ErrorMessage = &quot;제한시간 내 저장된 파일을 확인하지 못했습니다. 대상 경로: &quot; &amp; in_TargetSavePath&#xA;End If" DisplayName="Wait Saved File Completion" sap:VirtualizedContainerService.HintSize="580,197" sap2010:WorkflowViewState.IdRef="InvokeCode_4">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[normalizedFolder]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_TargetSavePath">[targetSavePath]</InArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_TimeoutSeconds">[effectiveTimeoutSeconds]</InArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, s:DateTime)" x:Key="in_FilesBefore">[filesBeforeSave]</InArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Int64)" x:Key="in_FileSizesBefore">[fileSizesBeforeSave]</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_FileCreated">[fileCreated]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_SavedFilePath">[out_SavedFilePath]</OutArgument>
+                <OutArgument x:TypeArguments="x:Int64" x:Key="out_PreviousFileSize">[previousFileSize]</OutArgument>
+                <OutArgument x:TypeArguments="x:Int32" x:Key="out_StablePollCount">[stablePollCount]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_ErrorMessage">[waitErrorMessage]</OutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <If Condition="[Not fileCreated]" DisplayName="저장 파일 생성 결과 검증" sap:VirtualizedContainerService.HintSize="580,57" sap2010:WorkflowViewState.IdRef="If_6">
+              <If.Then>
+                <Throw DisplayName="Throw Saved File Missing" Exception="[New System.Exception(If(String.IsNullOrWhiteSpace(waitErrorMessage), &quot;저장된 파일을 확인하지 못했습니다.&quot;, waitErrorMessage))]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_6" />
+              </If.Then>
+            </If>
+            <ui:MultipleAssign DisplayName="Save As 성공 결과 설정" sap:VirtualizedContainerService.HintSize="580,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+              <ui:MultipleAssign.AssignOperations>
+                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="2">
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:Boolean">[out_SaveSuccess]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
+                    <ui:AssignOperation.To>
+                      <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                    </ui:AssignOperation.To>
+                    <ui:AssignOperation.Value>
+                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                    </ui:AssignOperation.Value>
+                  </ui:AssignOperation>
+                </scg:List>
+              </ui:MultipleAssign.AssignOperations>
+            </ui:MultipleAssign>
+            <WriteLine DisplayName="Write Save As Success" sap:VirtualizedContainerService.HintSize="580,123" sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="[&quot;=== Save As Completed ===&quot; &amp; Environment.NewLine &amp; &quot;Success : &quot; &amp; out_SaveSuccess.ToString() &amp; Environment.NewLine &amp; &quot;SavedFilePath : &quot; &amp; out_SavedFilePath &amp; Environment.NewLine &amp; &quot;FileSize : &quot; &amp; previousFileSize.ToString() &amp; Environment.NewLine &amp; &quot;StablePollCount : &quot; &amp; stablePollCount.ToString()]" />
+          </Sequence>
+        </TryCatch.Try>
+        <TryCatch.Catches>
+          <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+            <ActivityAction x:TypeArguments="s:Exception">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+              </ActivityAction.Argument>
+              <ui:MultipleAssign DisplayName="Save As 실패 결과 설정" sap:VirtualizedContainerService.HintSize="614,240" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+                <ui:MultipleAssign.AssignOperations>
+                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_16">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[out_SaveSuccess]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_17">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">[out_SavedFilePath]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">[exception.GetBaseException().Message]</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                  </scg:List>
+                </ui:MultipleAssign.AssignOperations>
+              </ui:MultipleAssign>
+            </ActivityAction>
+          </Catch>
+        </TryCatch.Catches>
+        <TryCatch.Finally>
+          <Sequence DisplayName="마지막" sap2010:WorkflowViewState.IdRef="Sequence_7" />
+        </TryCatch.Finally>
+      </TryCatch>
+    </Sequence>
+  </Sequence>
+</Activity>

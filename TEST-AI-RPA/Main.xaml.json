@@ -1,0 +1,93 @@
+{
+  "DisplayName": "Main",
+  "Tooltip": null,
+  "HelpLink": null,
+  "Color": null,
+  "OriginalIconFileName": null,
+  "Arguments": [
+    {
+      "Name": "in_ControlCode",
+      "DisplayName": "in_ControlCode",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "MAIL01",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_MaxSteps",
+      "DisplayName": "in_MaxSteps",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "20",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_StartUrl",
+      "DisplayName": "in_StartUrl",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "https://www.hwgeneralins.com/notice/ir/product-ing01.do",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_ObjectiveText",
+      "DisplayName": "in_ObjectiveText",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "개인용자동차보험의 상품요약 파일을 다운로드한다",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_LlmApiKey",
+      "DisplayName": "in_LlmApiKey",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_LlmModel",
+      "DisplayName": "in_LlmModel",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "Qwen/Qwen3.5-27B",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    },
+    {
+      "Name": "in_LlmApiBase",
+      "DisplayName": "in_LlmApiBase",
+      "Category": null,
+      "Tooltip": null,
+      "Placeholder": "https://et5se2es0uym1n-8000.proxy.runpod.net/v1",
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
+    }
+  ]
+}

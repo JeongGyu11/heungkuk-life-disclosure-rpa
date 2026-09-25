@@ -1,0 +1,918 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Download_File" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_ErrorMessage" Type="OutArgument(x:String)" />
+    <x:Property Name="out_DownloadMode" Type="OutArgument(x:String)" />
+    <x:Property Name="out_DownloadedFilePath" Type="OutArgument(x:String)" />
+    <x:Property Name="out_DownloadSuccess" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="in_TimeoutSeconds" Type="InArgument(x:Int32)" />
+    <x:Property Name="in_DownloadFolder" Type="InArgument(x:String)" />
+    <x:Property Name="in_ExpectedFileName" Type="InArgument(x:String)" />
+    <x:Property Name="in_BrowserElement" Type="InArgument(ui:UiElement)" />
+    <x:Property Name="in_SelectedUiElement" Type="InArgument(ui:UiElement)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Download_File_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.Platform.SyncObjects</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>NPOI.Core</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Download_File" sap:VirtualizedContainerService.HintSize="1859,9216" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="detectedProcessName" />
+      <Variable x:TypeArguments="x:String" Default="[String.Empty]" Name="saveAsDialogTitle" />
+      <Variable x:TypeArguments="ui:Window" Default="[Nothing]" Name="saveAsDialogElement" />
+      <Variable x:TypeArguments="x:String" Default="[String.Empty]" Name="autoTemporaryFilePath" />
+      <Variable x:TypeArguments="x:String" Default="[String.Empty]" Name="autoDownloadedFilePath" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="autoDownloadCompleted" />
+      <Variable x:TypeArguments="x:String" Name="clickErrorMessage" />
+      <Variable x:TypeArguments="x:Boolean" Name="clickSucceeded" />
+      <Variable x:TypeArguments="s:DateTime" Name="downloadDeadlineUtc" />
+      <Variable x:TypeArguments="s:DateTime" Name="downloadStartedUtc" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Int64)" Name="fileSizesBefore" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, s:DateTime)" Name="filesBefore" />
+      <Variable x:TypeArguments="x:Int32" Name="effectiveTimeoutSeconds" />
+      <Variable x:TypeArguments="x:String" Name="normalizedDownloadFolder" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="autoDownloadStarted" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="saveAsDialogDetected" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="activeWindowTitleValue" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="activeWindowProcessValue" />
+      <Variable x:TypeArguments="x:String" Name="saveAsHandleError" />
+      <Variable x:TypeArguments="x:String" Name="saveAsSavedFilePath" />
+      <Variable x:TypeArguments="x:Boolean" Name="saveAsHandled" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="Download File 초기화 및 버튼 클릭" sap:VirtualizedContainerService.HintSize="656,9193" sap2010:WorkflowViewState.IdRef="Sequence_27">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:MultipleAssign DisplayName="Download 상태 초기화" sap:VirtualizedContainerService.HintSize="622,831" sap2010:WorkflowViewState.IdRef="MultipleAssign_20">
+        <ui:MultipleAssign.AssignOperations>
+          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="32">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_46">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[out_DownloadSuccess]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_47">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[out_DownloadedFilePath]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_48">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[out_DownloadMode]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_49">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_50">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[normalizedDownloadFolder]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_51">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Int32">[effectiveTimeoutSeconds]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Int32">[in_TimeoutSeconds]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_52">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="scg:Dictionary(x:String, s:DateTime)">[filesBefore]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, s:DateTime)">[New System.Collections.Generic.Dictionary(Of String, System.DateTime)(System.StringComparer.OrdinalIgnoreCase)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_53">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Int64)">[fileSizesBefore]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Int64)">[New System.Collections.Generic.Dictionary(Of String, Long)(System.StringComparer.OrdinalIgnoreCase)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_54">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="s:DateTime">[downloadStartedUtc]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="s:DateTime">[System.DateTime.MinValue]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_55">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="s:DateTime">[downloadDeadlineUtc]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="s:DateTime">[System.DateTime.MinValue]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_56">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[clickSucceeded]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_57">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[clickErrorMessage]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_58">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[autoDownloadStarted]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_59">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[autoDownloadCompleted]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_60">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[autoDownloadedFilePath]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_61">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[autoTemporaryFilePath]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_62">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[saveAsDialogDetected]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_63">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="ui:Window">[saveAsDialogElement]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="ui:Window">[Nothing]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_64">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[saveAsDialogTitle]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_65">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[detectedProcessName]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_66">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Boolean">[saveAsHandled]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_67">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[saveAsSavedFilePath]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_68">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[saveAsHandleError]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+          </scg:List>
+        </ui:MultipleAssign.AssignOperations>
+      </ui:MultipleAssign>
+      <TryCatch DisplayName="Download 초기화 및 클릭 Try Catch" sap:VirtualizedContainerService.HintSize="622,8279" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+        <TryCatch.Try>
+          <Sequence DisplayName="Download 준비 및 처리" sap:VirtualizedContainerService.HintSize="620,7811" sap2010:WorkflowViewState.IdRef="Sequence_40">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[in_SelectedUiElement Is Nothing]" DisplayName="다운로드 대상 요소 검증" sap:VirtualizedContainerService.HintSize="586,342" sap2010:WorkflowViewState.IdRef="If_19">
+              <If.Then>
+                <Throw DisplayName="Throw Selected Element Missing" Exception="[New System.Exception(&quot;다운로드 대상 UI 요소가 없습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_4" />
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <If Condition="[String.IsNullOrWhiteSpace(in_DownloadFolder)]" DisplayName="다운로드 폴더 검증" sap:VirtualizedContainerService.HintSize="586,342" sap2010:WorkflowViewState.IdRef="If_20">
+              <If.Then>
+                <Throw DisplayName="Throw Download Folder Missing" Exception="[New System.Exception(&quot;다운로드 폴더가 지정되지 않았습니다.&quot;)]" sap:VirtualizedContainerService.HintSize="450,91" sap2010:WorkflowViewState.IdRef="Throw_5" />
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <If Condition="[effectiveTimeoutSeconds &lt;= 0]" DisplayName="다운로드 제한시간 보정" sap:VirtualizedContainerService.HintSize="586,394" sap2010:WorkflowViewState.IdRef="If_21">
+              <If.Then>
+                <Assign DisplayName="기본 제한시간 60초 설정" sap:VirtualizedContainerService.HintSize="450,143" sap2010:WorkflowViewState.IdRef="Assign_10">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Int32">[effectiveTimeoutSeconds]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Int32">60</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_32">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim folderPath As String = System.IO.Path.GetFullPath(in_Folder.Trim())&#xA;&#xA;If Not System.IO.Directory.Exists(folderPath) Then&#xA;    System.IO.Directory.CreateDirectory(folderPath)&#xA;End If&#xA;&#xA;Dim snapshotTimes As New System.Collections.Generic.Dictionary(Of String, System.DateTime)(System.StringComparer.OrdinalIgnoreCase)&#xA;Dim snapshotSizes As New System.Collections.Generic.Dictionary(Of String, Long)(System.StringComparer.OrdinalIgnoreCase)&#xA;&#xA;For Each filePath As String In System.IO.Directory.GetFiles(folderPath, &quot;*&quot;, System.IO.SearchOption.TopDirectoryOnly)&#xA;    Try&#xA;        Dim fileInfo As New System.IO.FileInfo(filePath)&#xA;        snapshotTimes(fileInfo.FullName) = fileInfo.LastWriteTimeUtc&#xA;        snapshotSizes(fileInfo.FullName) = fileInfo.Length&#xA;    Catch&#xA;    End Try&#xA;Next&#xA;&#xA;out_Folder = folderPath&#xA;out_FilesBefore = snapshotTimes&#xA;out_FileSizesBefore = snapshotSizes" DisplayName="Capture Download Folder Snapshot" sap:VirtualizedContainerService.HintSize="586,287" sap2010:WorkflowViewState.IdRef="InvokeCode_6">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[in_DownloadFolder]</InArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_Folder">[normalizedDownloadFolder]</OutArgument>
+                <OutArgument x:TypeArguments="scg:Dictionary(x:String, s:DateTime)" x:Key="out_FilesBefore">[filesBefore]</OutArgument>
+                <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Int64)" x:Key="out_FileSizesBefore">[fileSizesBefore]</OutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Execute Download Button Click" sap:VirtualizedContainerService.HintSize="586,177" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Execute_UI_Action.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Operation">["CLICK"]</InArgument>
+                <InArgument x:TypeArguments="ui:UiElement" x:Key="in_SelectedUiElement">[in_SelectedUiElement]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_InputText">[String.Empty]</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_ActionSuccess">[clickSucceeded]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_ErrorMessage">[clickErrorMessage]</OutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <If Condition="[Not clickSucceeded]" DisplayName="다운로드 버튼 클릭 결과 검증" sap:VirtualizedContainerService.HintSize="586,797" sap2010:WorkflowViewState.IdRef="If_22">
+              <If.Then>
+                <Sequence DisplayName="다운로드 클릭 실패 처리" sap:VirtualizedContainerService.HintSize="486,568" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If Condition="[String.IsNullOrWhiteSpace(clickErrorMessage)]" DisplayName="클릭 실패 메시지 보정" sap:VirtualizedContainerService.HintSize="452,394" sap2010:WorkflowViewState.IdRef="If_25">
+                    <If.Then>
+                      <Assign DisplayName="기본 클릭 실패 메시지 설정" sap:VirtualizedContainerService.HintSize="450,143" sap2010:WorkflowViewState.IdRef="Assign_11">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[clickErrorMessage]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">["다운로드 버튼 클릭에 실패했습니다."]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                  <Throw DisplayName="Throw Download Click Failed" Exception="[New System.Exception(clickErrorMessage)]" sap:VirtualizedContainerService.HintSize="452,114" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="486,90" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <Assign DisplayName="다운로드 시작 시각 설정" sap:VirtualizedContainerService.HintSize="586,175" sap2010:WorkflowViewState.IdRef="Assign_8">
+              <Assign.To>
+                <OutArgument x:TypeArguments="s:DateTime">[downloadStartedUtc]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="s:DateTime">[System.DateTime.UtcNow]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="다운로드 감지 종료 시각 설정" sap:VirtualizedContainerService.HintSize="586,175" sap2010:WorkflowViewState.IdRef="Assign_9">
+              <Assign.To>
+                <OutArgument x:TypeArguments="s:DateTime">[downloadDeadlineUtc]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="s:DateTime">[downloadStartedUtc.AddSeconds(effectiveTimeoutSeconds)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <WriteLine DisplayName="Write Download Detection Start" sap:VirtualizedContainerService.HintSize="586,123" sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="[&quot;=== Download Detection Started ===&quot; &amp; Environment.NewLine &amp; &quot;Folder : &quot; &amp; normalizedDownloadFolder &amp; Environment.NewLine &amp; &quot;ExpectedFileName : &quot; &amp; System.Convert.ToString(in_ExpectedFileName) &amp; Environment.NewLine &amp; &quot;TimeoutSeconds : &quot; &amp; effectiveTimeoutSeconds.ToString()]" />
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_AutoDownloadStarted = False&#xA;out_AutoDownloadCompleted = False&#xA;out_DownloadedFilePath = String.Empty&#xA;out_TemporaryFilePath = String.Empty&#xA;&#xA;If String.IsNullOrWhiteSpace(in_Folder) Then&#xA;    Throw New Exception(&quot;자동 다운로드 감지 폴더가 비어 있습니다.&quot;)&#xA;End If&#xA;&#xA;If Not System.IO.Directory.Exists(in_Folder) Then&#xA;    Throw New Exception(&quot;자동 다운로드 감지 폴더가 존재하지 않습니다: &quot; &amp; in_Folder)&#xA;End If&#xA;&#xA;Dim probeSeconds As Integer = in_ProbeSeconds&#xA;If probeSeconds &lt;= 0 Then&#xA;    probeSeconds = 3&#xA;End If&#xA;&#xA;Dim expectedFileName As String = String.Empty&#xA;If in_ExpectedFileName IsNot Nothing Then&#xA;    expectedFileName = in_ExpectedFileName.Trim()&#xA;End If&#xA;&#xA;Dim probeDeadlineUtc As DateTime = DateTime.UtcNow.AddSeconds(probeSeconds)&#xA;Dim previousCandidatePath As String = String.Empty&#xA;Dim previousCandidateSize As Long = -1L&#xA;Dim stablePollCount As Integer = 0&#xA;&#xA;Do While DateTime.UtcNow &lt;= probeDeadlineUtc&#xA;    Dim exactPath As String = String.Empty&#xA;    Dim exactSize As Long = -1L&#xA;    Dim exactWriteTime As DateTime = DateTime.MinValue&#xA;&#xA;    Dim fallbackPath As String = String.Empty&#xA;    Dim fallbackSize As Long = -1L&#xA;    Dim fallbackWriteTime As DateTime = DateTime.MinValue&#xA;&#xA;    Dim temporaryPath As String = String.Empty&#xA;    Dim temporaryWriteTime As DateTime = DateTime.MinValue&#xA;&#xA;    For Each currentPath As String In System.IO.Directory.GetFiles(in_Folder, &quot;*&quot;, System.IO.SearchOption.TopDirectoryOnly)&#xA;        Try&#xA;            Dim currentInfo As New System.IO.FileInfo(currentPath)&#xA;            Dim fullPath As String = currentInfo.FullName&#xA;&#xA;            Dim existedBefore As Boolean = False&#xA;            If in_FilesBefore IsNot Nothing Then&#xA;                existedBefore = in_FilesBefore.ContainsKey(fullPath)&#xA;            End If&#xA;&#xA;            Dim previousWriteTime As DateTime = DateTime.MinValue&#xA;            If existedBefore Then&#xA;                previousWriteTime = in_FilesBefore(fullPath)&#xA;            End If&#xA;&#xA;            Dim previousSize As Long = -1L&#xA;            If in_FileSizesBefore IsNot Nothing AndAlso in_FileSizesBefore.ContainsKey(fullPath) Then&#xA;                previousSize = in_FileSizesBefore(fullPath)&#xA;            End If&#xA;&#xA;            Dim isNewOrChanged As Boolean = Not existedBefore OrElse currentInfo.LastWriteTimeUtc &gt; previousWriteTime OrElse currentInfo.Length &lt;&gt; previousSize&#xA;            If Not isNewOrChanged Then&#xA;                Continue For&#xA;            End If&#xA;&#xA;            Dim extension As String = currentInfo.Extension.ToLowerInvariant()&#xA;            Dim isTemporary As Boolean = extension = &quot;.crdownload&quot; OrElse extension = &quot;.part&quot; OrElse extension = &quot;.partial&quot; OrElse extension = &quot;.download&quot; OrElse extension = &quot;.tmp&quot;&#xA;&#xA;            If isTemporary Then&#xA;                If currentInfo.LastWriteTimeUtc &gt; temporaryWriteTime Then&#xA;                    temporaryPath = fullPath&#xA;                    temporaryWriteTime = currentInfo.LastWriteTimeUtc&#xA;                End If&#xA;                Continue For&#xA;            End If&#xA;&#xA;            If Not String.IsNullOrWhiteSpace(expectedFileName) AndAlso String.Equals(currentInfo.Name, expectedFileName, StringComparison.OrdinalIgnoreCase) Then&#xA;                If currentInfo.LastWriteTimeUtc &gt;= exactWriteTime Then&#xA;                    exactPath = fullPath&#xA;                    exactSize = currentInfo.Length&#xA;                    exactWriteTime = currentInfo.LastWriteTimeUtc&#xA;                End If&#xA;            ElseIf currentInfo.LastWriteTimeUtc &gt;= fallbackWriteTime Then&#xA;                fallbackPath = fullPath&#xA;                fallbackSize = currentInfo.Length&#xA;                fallbackWriteTime = currentInfo.LastWriteTimeUtc&#xA;            End If&#xA;        Catch&#xA;        End Try&#xA;    Next&#xA;&#xA;    Dim candidatePath As String = exactPath&#xA;    Dim candidateSize As Long = exactSize&#xA;&#xA;    If String.IsNullOrWhiteSpace(candidatePath) Then&#xA;        candidatePath = fallbackPath&#xA;        candidateSize = fallbackSize&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(candidatePath) Then&#xA;        out_AutoDownloadStarted = True&#xA;&#xA;        If String.Equals(previousCandidatePath, candidatePath, StringComparison.OrdinalIgnoreCase) AndAlso previousCandidateSize = candidateSize Then&#xA;            stablePollCount += 1&#xA;        Else&#xA;            previousCandidatePath = candidatePath&#xA;            previousCandidateSize = candidateSize&#xA;            stablePollCount = 1&#xA;        End If&#xA;&#xA;        Dim canOpenExclusively As Boolean = False&#xA;        Try&#xA;            Using stream As New System.IO.FileStream(candidatePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None)&#xA;                canOpenExclusively = True&#xA;            End Using&#xA;        Catch&#xA;            canOpenExclusively = False&#xA;        End Try&#xA;&#xA;        If stablePollCount &gt;= 2 AndAlso canOpenExclusively Then&#xA;            out_AutoDownloadCompleted = True&#xA;            out_DownloadedFilePath = candidatePath&#xA;            Exit Do&#xA;        End If&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(temporaryPath) Then&#xA;        out_AutoDownloadStarted = True&#xA;        out_TemporaryFilePath = temporaryPath&#xA;        Exit Do&#xA;    End If&#xA;&#xA;    System.Threading.Thread.Sleep(250)&#xA;Loop" DisplayName="Probe Automatic Download" sap:VirtualizedContainerService.HintSize="586,287" sap2010:WorkflowViewState.IdRef="InvokeCode_7">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[normalizedDownloadFolder]</InArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, s:DateTime)" x:Key="in_FilesBefore">[filesBefore]</InArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Int64)" x:Key="in_FileSizesBefore">[fileSizesBefore]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedFileName">[in_ExpectedFileName]</InArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_ProbeSeconds">3</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoDownloadStarted">[autoDownloadStarted]</OutArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoDownloadCompleted">[autoDownloadCompleted]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_DownloadedFilePath">[autoDownloadedFilePath]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_TemporaryFilePath">[autoTemporaryFilePath]</OutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <If Condition="[autoDownloadStarted AndAlso Not autoDownloadCompleted]" DisplayName="자동 다운로드 진행 중 여부" sap:VirtualizedContainerService.HintSize="586,506" sap2010:WorkflowViewState.IdRef="If_23">
+              <If.Then>
+                <ui:InvokeCode ContinueOnError="{x:Null}" Code="out_AutoDownloadCompleted = False&#xA;out_DownloadedFilePath = String.Empty&#xA;&#xA;If String.IsNullOrWhiteSpace(in_Folder) Then&#xA;    Throw New Exception(&quot;자동 다운로드 완료 감지 폴더가 비어 있습니다.&quot;)&#xA;End If&#xA;&#xA;If Not System.IO.Directory.Exists(in_Folder) Then&#xA;    Throw New Exception(&quot;자동 다운로드 완료 감지 폴더가 존재하지 않습니다: &quot; &amp; in_Folder)&#xA;End If&#xA;&#xA;Dim deadlineUtc As DateTime = in_DeadlineUtc&#xA;If deadlineUtc &lt;= DateTime.UtcNow Then&#xA;    deadlineUtc = DateTime.UtcNow.AddSeconds(1)&#xA;End If&#xA;&#xA;Dim expectedFileName As String = String.Empty&#xA;If in_ExpectedFileName IsNot Nothing Then&#xA;    expectedFileName = in_ExpectedFileName.Trim()&#xA;End If&#xA;&#xA;Dim previousCandidatePath As String = String.Empty&#xA;Dim previousCandidateSize As Long = -1L&#xA;Dim stablePollCount As Integer = 0&#xA;&#xA;Do While DateTime.UtcNow &lt;= deadlineUtc&#xA;    Dim exactPath As String = String.Empty&#xA;    Dim exactSize As Long = -1L&#xA;    Dim exactWriteTime As DateTime = DateTime.MinValue&#xA;&#xA;    Dim fallbackPath As String = String.Empty&#xA;    Dim fallbackSize As Long = -1L&#xA;    Dim fallbackWriteTime As DateTime = DateTime.MinValue&#xA;&#xA;    For Each currentPath As String In System.IO.Directory.GetFiles(in_Folder, &quot;*&quot;, System.IO.SearchOption.TopDirectoryOnly)&#xA;        Try&#xA;            Dim currentInfo As New System.IO.FileInfo(currentPath)&#xA;            Dim fullPath As String = currentInfo.FullName&#xA;&#xA;            Dim existedBefore As Boolean = False&#xA;            If in_FilesBefore IsNot Nothing Then&#xA;                existedBefore = in_FilesBefore.ContainsKey(fullPath)&#xA;            End If&#xA;&#xA;            Dim previousWriteTime As DateTime = DateTime.MinValue&#xA;            If existedBefore Then&#xA;                previousWriteTime = in_FilesBefore(fullPath)&#xA;            End If&#xA;&#xA;            Dim previousSize As Long = -1L&#xA;            If in_FileSizesBefore IsNot Nothing AndAlso in_FileSizesBefore.ContainsKey(fullPath) Then&#xA;                previousSize = in_FileSizesBefore(fullPath)&#xA;            End If&#xA;&#xA;            Dim isNewOrChanged As Boolean = Not existedBefore OrElse currentInfo.LastWriteTimeUtc &gt; previousWriteTime OrElse currentInfo.Length &lt;&gt; previousSize&#xA;            If Not isNewOrChanged Then&#xA;                Continue For&#xA;            End If&#xA;&#xA;            Dim extension As String = currentInfo.Extension.ToLowerInvariant()&#xA;            Dim isTemporary As Boolean = extension = &quot;.crdownload&quot; OrElse extension = &quot;.part&quot; OrElse extension = &quot;.partial&quot; OrElse extension = &quot;.download&quot; OrElse extension = &quot;.tmp&quot;&#xA;            If isTemporary Then&#xA;                Continue For&#xA;            End If&#xA;&#xA;            If Not String.IsNullOrWhiteSpace(expectedFileName) AndAlso String.Equals(currentInfo.Name, expectedFileName, StringComparison.OrdinalIgnoreCase) Then&#xA;                If currentInfo.LastWriteTimeUtc &gt;= exactWriteTime Then&#xA;                    exactPath = fullPath&#xA;                    exactSize = currentInfo.Length&#xA;                    exactWriteTime = currentInfo.LastWriteTimeUtc&#xA;                End If&#xA;            ElseIf currentInfo.LastWriteTimeUtc &gt;= fallbackWriteTime Then&#xA;                fallbackPath = fullPath&#xA;                fallbackSize = currentInfo.Length&#xA;                fallbackWriteTime = currentInfo.LastWriteTimeUtc&#xA;            End If&#xA;        Catch&#xA;        End Try&#xA;    Next&#xA;&#xA;    Dim candidatePath As String = exactPath&#xA;    Dim candidateSize As Long = exactSize&#xA;&#xA;    If String.IsNullOrWhiteSpace(candidatePath) Then&#xA;        candidatePath = fallbackPath&#xA;        candidateSize = fallbackSize&#xA;    End If&#xA;&#xA;    If Not String.IsNullOrWhiteSpace(candidatePath) Then&#xA;        If String.Equals(previousCandidatePath, candidatePath, StringComparison.OrdinalIgnoreCase) AndAlso previousCandidateSize = candidateSize Then&#xA;            stablePollCount += 1&#xA;        Else&#xA;            previousCandidatePath = candidatePath&#xA;            previousCandidateSize = candidateSize&#xA;            stablePollCount = 1&#xA;        End If&#xA;&#xA;        Dim canOpenExclusively As Boolean = False&#xA;        Try&#xA;            Using stream As New System.IO.FileStream(candidatePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None)&#xA;                canOpenExclusively = True&#xA;            End Using&#xA;        Catch&#xA;            canOpenExclusively = False&#xA;        End Try&#xA;&#xA;        If stablePollCount &gt;= 2 AndAlso canOpenExclusively Then&#xA;            out_AutoDownloadCompleted = True&#xA;            out_DownloadedFilePath = candidatePath&#xA;            Exit Do&#xA;        End If&#xA;    Else&#xA;        previousCandidatePath = String.Empty&#xA;        previousCandidateSize = -1L&#xA;        stablePollCount = 0&#xA;    End If&#xA;&#xA;    System.Threading.Thread.Sleep(500)&#xA;Loop" DisplayName="Wait Automatic Download Completion" sap:VirtualizedContainerService.HintSize="450,255" sap2010:WorkflowViewState.IdRef="InvokeCode_8">
+                  <ui:InvokeCode.Arguments>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[normalizedDownloadFolder]</InArgument>
+                    <InArgument x:TypeArguments="scg:Dictionary(x:String, s:DateTime)" x:Key="in_FilesBefore">[filesBefore]</InArgument>
+                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Int64)" x:Key="in_FileSizesBefore">[fileSizesBefore]</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedFileName">[in_ExpectedFileName]</InArgument>
+                    <InArgument x:TypeArguments="s:DateTime" x:Key="in_DeadlineUtc">[downloadDeadlineUtc]</InArgument>
+                    <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoDownloadCompleted">[autoDownloadCompleted]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String" x:Key="out_DownloadedFilePath">[autoDownloadedFilePath]</OutArgument>
+                  </ui:InvokeCode.Arguments>
+                </ui:InvokeCode>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <If Condition="[autoDownloadStarted]" DisplayName="자동 다운로드 결과 처리" sap:VirtualizedContainerService.HintSize="586,4032" sap2010:WorkflowViewState.IdRef="If_24">
+              <If.Then>
+                <Sequence DisplayName="자동 다운로드 처리" sap:VirtualizedContainerService.HintSize="584,767" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign DisplayName="자동 다운로드 모드 설정" sap:VirtualizedContainerService.HintSize="550,175" sap2010:WorkflowViewState.IdRef="Assign_12">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[out_DownloadMode]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">["AUTO_DOWNLOAD"]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <If Condition="[autoDownloadCompleted AndAlso Not String.IsNullOrWhiteSpace(autoDownloadedFilePath)]" DisplayName="자동 다운로드 완료 여부 반영" sap:VirtualizedContainerService.HintSize="550,532" sap2010:WorkflowViewState.IdRef="If_26">
+                    <If.Then>
+                      <ui:MultipleAssign DisplayName="자동 다운로드 성공 반환" sap:VirtualizedContainerService.HintSize="478,179" sap2010:WorkflowViewState.IdRef="MultipleAssign_26">
+                        <ui:MultipleAssign.AssignOperations>
+                          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="3">
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_69">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[out_DownloadSuccess]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_70">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:String">[out_DownloadedFilePath]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:String">[autoDownloadedFilePath]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_71">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                          </scg:List>
+                        </ui:MultipleAssign.AssignOperations>
+                      </ui:MultipleAssign>
+                    </If.Then>
+                    <If.Else>
+                      <ui:MultipleAssign DisplayName="자동 다운로드 완료 실패 반환" sap:VirtualizedContainerService.HintSize="478,179" sap2010:WorkflowViewState.IdRef="MultipleAssign_27">
+                        <ui:MultipleAssign.AssignOperations>
+                          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="3">
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_72">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[out_DownloadSuccess]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_73">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:String">[out_DownloadedFilePath]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_74">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:String">["자동 다운로드가 시작되었지만 제한시간 내 완료 파일을 확인하지 못했습니다."]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                          </scg:List>
+                        </ui:MultipleAssign.AssignOperations>
+                      </ui:MultipleAssign>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="다른 이름으로 저장 처리" sap:VirtualizedContainerService.HintSize="584,3126" sap2010:WorkflowViewState.IdRef="Sequence_39">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Delay DisplayName="저장 창 표시 대기" Duration="00:00:00.5000000" sap:VirtualizedContainerService.HintSize="550,123" sap2010:WorkflowViewState.IdRef="Delay_4" />
+                  <ui:GetActiveWindow ApplicationWindow="[saveAsDialogElement]" DisplayName="Get Active Save Dialog Window" sap:VirtualizedContainerService.HintSize="550,449" sap2010:WorkflowViewState.IdRef="GetActiveWindow_3">
+                    <ui:GetActiveWindow.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="활성 창 속성 조회" sap:VirtualizedContainerService.HintSize="450,277" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:GetAttribute Attribute="title" ContinueOnError="True" DisplayName="Get Active Window Title" sap:VirtualizedContainerService.HintSize="416,113" sap2010:WorkflowViewState.IdRef="GetAttribute_7">
+                            <ui:GetAttribute.Result>
+                              <OutArgument x:TypeArguments="ui:GenericValue">[activeWindowTitleValue]</OutArgument>
+                            </ui:GetAttribute.Result>
+                            <ui:GetAttribute.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Selector="{x:Null}" Element="[saveAsDialogElement]" Id="fa8f240d-3d83-46a0-b779-1a8dc104e8f2" TimeoutMS="3000">
+                                <ui:Target.WaitForReady>
+                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                </ui:Target.WaitForReady>
+                              </ui:Target>
+                            </ui:GetAttribute.Target>
+                          </ui:GetAttribute>
+                          <ui:GetAttribute Attribute="app" ContinueOnError="True" DisplayName="Get Active Window Process" sap:VirtualizedContainerService.HintSize="416,104" sap2010:WorkflowViewState.IdRef="GetAttribute_8">
+                            <ui:GetAttribute.Result>
+                              <OutArgument x:TypeArguments="ui:GenericValue">[activeWindowProcessValue]</OutArgument>
+                            </ui:GetAttribute.Result>
+                            <ui:GetAttribute.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Selector="{x:Null}" Element="[saveAsDialogElement]" Id="50dd0747-b4c8-4a25-9e4c-a554449b79e8" TimeoutMS="3000">
+                                <ui:Target.WaitForReady>
+                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                </ui:Target.WaitForReady>
+                              </ui:Target>
+                            </ui:GetAttribute.Target>
+                          </ui:GetAttribute>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:GetActiveWindow.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:GetActiveWindow>
+                  <ui:MultipleAssign DisplayName="활성 창 정보 정규화" sap:VirtualizedContainerService.HintSize="550,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_32">
+                    <ui:MultipleAssign.AssignOperations>
+                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="2">
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_95">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[saveAsDialogTitle]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">[If(activeWindowTitleValue Is Nothing, String.Empty, activeWindowTitleValue.ToString(System.Globalization.CultureInfo.InvariantCulture)).Trim()]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_96">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[detectedProcessName]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">[System.IO.Path.GetFileName(If(activeWindowProcessValue Is Nothing, String.Empty, activeWindowProcessValue.ToString(System.Globalization.CultureInfo.InvariantCulture)).Trim()).ToLowerInvariant()]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                      </scg:List>
+                    </ui:MultipleAssign.AssignOperations>
+                  </ui:MultipleAssign>
+                  <Assign DisplayName="다른 이름으로 저장 창 판정" sap:VirtualizedContainerService.HintSize="550,175" sap2010:WorkflowViewState.IdRef="Assign_16">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Boolean">[saveAsDialogDetected]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Boolean">[(String.IsNullOrWhiteSpace(detectedProcessName) OrElse detectedProcessName = "chrome.exe" OrElse detectedProcessName = "chrome" OrElse detectedProcessName = "msedge.exe" OrElse detectedProcessName = "msedge" OrElse detectedProcessName = "firefox.exe" OrElse detectedProcessName = "firefox" OrElse detectedProcessName = "explorer.exe" OrElse detectedProcessName = "explorer") AndAlso (saveAsDialogTitle.IndexOf("다른 이름으로 저장", System.StringComparison.OrdinalIgnoreCase) &gt;= 0 OrElse saveAsDialogTitle.IndexOf("파일 이름을 지정하여 저장", System.StringComparison.OrdinalIgnoreCase) &gt;= 0 OrElse saveAsDialogTitle.IndexOf("파일 저장", System.StringComparison.OrdinalIgnoreCase) &gt;= 0 OrElse saveAsDialogTitle.IndexOf("Save As", System.StringComparison.OrdinalIgnoreCase) &gt;= 0 OrElse saveAsDialogTitle.IndexOf("Save File", System.StringComparison.OrdinalIgnoreCase) &gt;= 0 OrElse saveAsDialogTitle.IndexOf("Enter name of file to save to", System.StringComparison.OrdinalIgnoreCase) &gt;= 0)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <WriteLine DisplayName="Write Save As Dialog Detection" sap:VirtualizedContainerService.HintSize="550,123" sap2010:WorkflowViewState.IdRef="WriteLine_12" Text="[&quot;=== Save As Dialog Detection ===&quot; &amp; Environment.NewLine &amp; &quot;Detected : &quot; &amp; saveAsDialogDetected.ToString() &amp; Environment.NewLine &amp; &quot;Title : &quot; &amp; saveAsDialogTitle &amp; Environment.NewLine &amp; &quot;Process : &quot; &amp; detectedProcessName]" />
+                  <If Condition="[saveAsDialogDetected]" DisplayName="저장 창 처리 여부" sap:VirtualizedContainerService.HintSize="550,2016" sap2010:WorkflowViewState.IdRef="If_27">
+                    <If.Then>
+                      <Sequence DisplayName="Handle Save As Dialog" sap:VirtualizedContainerService.HintSize="548,1654" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:MultipleAssign DisplayName="저장 창 처리값 초기화" sap:VirtualizedContainerService.HintSize="514,211" sap2010:WorkflowViewState.IdRef="MultipleAssign_23">
+                          <ui:MultipleAssign.AssignOperations>
+                            <scg:List x:TypeArguments="ui:AssignOperation" Capacity="3">
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_77">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:Boolean">[saveAsHandled]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_78">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:String">[saveAsSavedFilePath]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_79">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:String">[saveAsHandleError]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                            </scg:List>
+                          </ui:MultipleAssign.AssignOperations>
+                        </ui:MultipleAssign>
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Handle_Save_As_Dialog - Invoke Workflow File (Handle_Save_As_Dialog.xaml)" sap:VirtualizedContainerService.HintSize="514,177" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Handle_Save_As_Dialog.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="ui:Window" x:Key="in_SaveAsDialogWindow">[saveAsDialogElement]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_DownloadFolder">[normalizedDownloadFolder]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedFileName">[System.Convert.ToString(in_ExpectedFileName)]</InArgument>
+                            <InArgument x:TypeArguments="x:Int32" x:Key="in_TimeoutSeconds">[effectiveTimeoutSeconds]</InArgument>
+                            <OutArgument x:TypeArguments="x:Boolean" x:Key="out_SaveSuccess">[saveAsHandled]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="out_SavedFilePath">[saveAsSavedFilePath]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="out_ErrorMessage">[saveAsHandleError]</OutArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <Assign DisplayName="Save As 다운로드 모드 설정" sap:VirtualizedContainerService.HintSize="514,175" sap2010:WorkflowViewState.IdRef="Assign_13">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[out_DownloadMode]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">["SAVE_AS_DIALOG"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <If Condition="[saveAsHandled AndAlso Not String.IsNullOrWhiteSpace(saveAsSavedFilePath)]" DisplayName="저장 창 처리 성공 여부 반영" sap:VirtualizedContainerService.HintSize="514,1031" sap2010:WorkflowViewState.IdRef="If_28">
+                          <If.Then>
+                            <ui:MultipleAssign DisplayName="Save As 성공 반환" sap:VirtualizedContainerService.HintSize="512,179" sap2010:WorkflowViewState.IdRef="MultipleAssign_24">
+                              <ui:MultipleAssign.AssignOperations>
+                                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="3">
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_80">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:Boolean">[out_DownloadSuccess]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap:VirtualizedContainerService.HintSize="334,25" sap2010:WorkflowViewState.IdRef="AssignOperation_45">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[out_DownloadedFilePath]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[saveAsSavedFilePath]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_81">
+                                    <ui:AssignOperation.To>
+                                      <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                                    </ui:AssignOperation.To>
+                                    <ui:AssignOperation.Value>
+                                      <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                                    </ui:AssignOperation.Value>
+                                  </ui:AssignOperation>
+                                </scg:List>
+                              </ui:MultipleAssign.AssignOperations>
+                            </ui:MultipleAssign>
+                          </If.Then>
+                          <If.Else>
+                            <Sequence DisplayName="Save As 실패 반환" sap:VirtualizedContainerService.HintSize="512,700" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:MultipleAssign DisplayName="Save As 실패 기본값 설정" sap:VirtualizedContainerService.HintSize="478,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_25">
+                                <ui:MultipleAssign.AssignOperations>
+                                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="2">
+                                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_82">
+                                      <ui:AssignOperation.To>
+                                        <OutArgument x:TypeArguments="x:Boolean">[out_DownloadSuccess]</OutArgument>
+                                      </ui:AssignOperation.To>
+                                      <ui:AssignOperation.Value>
+                                        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                      </ui:AssignOperation.Value>
+                                    </ui:AssignOperation>
+                                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_83">
+                                      <ui:AssignOperation.To>
+                                        <OutArgument x:TypeArguments="x:String">[out_DownloadedFilePath]</OutArgument>
+                                      </ui:AssignOperation.To>
+                                      <ui:AssignOperation.Value>
+                                        <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                                      </ui:AssignOperation.Value>
+                                    </ui:AssignOperation>
+                                  </scg:List>
+                                </ui:MultipleAssign.AssignOperations>
+                              </ui:MultipleAssign>
+                              <If Condition="[String.IsNullOrWhiteSpace(saveAsHandleError)]" DisplayName="Save As 실패 메시지 보정" sap:VirtualizedContainerService.HintSize="478,460" sap2010:WorkflowViewState.IdRef="If_29">
+                                <If.Then>
+                                  <Assign DisplayName="기본 Save As 실패 메시지" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="Assign_14">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:String">["다른 이름으로 저장 처리에 실패했습니다."]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Then>
+                                <If.Else>
+                                  <Assign DisplayName="하위 Save As 오류 유지" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="Assign_15">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:String">[saveAsHandleError]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Else>
+                              </If>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <ui:MultipleAssign DisplayName="다운로드 방식 미감지 실패 반환" sap:VirtualizedContainerService.HintSize="548,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_22">
+                        <ui:MultipleAssign.AssignOperations>
+                          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_84">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:String">[out_DownloadMode]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:String">["UNKNOWN"]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_85">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[out_DownloadSuccess]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_86">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:String">[out_DownloadedFilePath]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_87">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:String">["자동 다운로드 또는 다른 이름으로 저장 창을 확인하지 못했습니다."]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                          </scg:List>
+                        </ui:MultipleAssign.AssignOperations>
+                      </ui:MultipleAssign>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+            <WriteLine DisplayName="Write Download Final Result" sap:VirtualizedContainerService.HintSize="586,114" sap2010:WorkflowViewState.IdRef="WriteLine_11" Text="[&quot;=== Download Final Result ===&quot; &amp; Environment.NewLine &amp; &quot;Success : &quot; &amp; out_DownloadSuccess.ToString() &amp; Environment.NewLine &amp; &quot;Mode : &quot; &amp; System.Convert.ToString(out_DownloadMode) &amp; Environment.NewLine &amp; &quot;DownloadedFilePath : &quot; &amp; System.Convert.ToString(out_DownloadedFilePath) &amp; Environment.NewLine &amp; &quot;ErrorMessage : &quot; &amp; System.Convert.ToString(out_ErrorMessage)]" />
+          </Sequence>
+        </TryCatch.Try>
+        <TryCatch.Catches>
+          <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+            <ActivityAction x:TypeArguments="s:Exception">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+              </ActivityAction.Argument>
+              <ui:MultipleAssign DisplayName="Download 실패 반환" sap:VirtualizedContainerService.HintSize="620,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_21">
+                <ui:MultipleAssign.AssignOperations>
+                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_88">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[out_DownloadSuccess]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_89">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">[out_DownloadedFilePath]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_90">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">[out_DownloadMode]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">[String.Empty]</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_91">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">[out_ErrorMessage]</OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">[exception.GetBaseException().Message]</InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                  </scg:List>
+                </ui:MultipleAssign.AssignOperations>
+              </ui:MultipleAssign>
+            </ActivityAction>
+          </Catch>
+        </TryCatch.Catches>
+        <TryCatch.Finally>
+          <Sequence DisplayName="마지막" sap:VirtualizedContainerService.HintSize="620,90" sap2010:WorkflowViewState.IdRef="Sequence_41">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </TryCatch.Finally>
+      </TryCatch>
+    </Sequence>
+  </Sequence>
+</Activity>
